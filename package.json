@@ -1,0 +1,44 @@
+{
+  "name": "@fastify/deepmerge",
+  "version": "1.0.0",
+  "description": "Template repository to create standardized Fastify plugins.",
+  "main": "index.js",
+  "types": "types/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "bench": "node ./benchmark/bench.js",
+    "lint:fix": "standard --fix",
+    "test:lint": "standard",
+    "test:unit": "tap -J test/*.test.js test/**/*.test.js",
+    "test": "npm run test:lint && npm run test:unit && npm run test:typescript",
+    "test:typescript": "tsd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/deepmerge.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fastify/deepmerge/issues"
+  },
+  "homepage": "https://github.com/fastify/deepmerge#readme",
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "standard": "^17.0.0",
+    "tap": "^16.3.0",
+    "tsd": "^0.21.0"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "types/index.d.ts"
+  ],
+  "keywords": [
+    "merge",
+    "deep"
+  ]
+}
