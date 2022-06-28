@@ -1,3 +1,7 @@
+// based on https://github.com/TehShrike/deepmerge
+// MIT License
+// Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
+
 'use strict'
 
 function deepmergeConstructor (options) {
