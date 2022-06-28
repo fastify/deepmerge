@@ -81,7 +81,17 @@ function deepmergeConstructor (options) {
     }
   }
 
-  return _deepmerge
+  function _deepmergeAll () {
+    let result = {}
+    for (let i = 0, il = arguments.length; i < il; ++i) {
+      result = _deepmerge(result, arguments[i])
+    }
+    return result
+  }
+
+  return options && options.all
+    ? _deepmergeAll
+    : _deepmerge
 }
 
 module.exports = deepmergeConstructor

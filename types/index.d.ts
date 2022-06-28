@@ -1,8 +1,10 @@
+declare function deepmerge(options: Options & { all: true }): DeepMergeAllFn;
 declare function deepmerge(options?: Options): DeepMergeFn;
 
 type DeepMergeFn = <T1, T2>(target: T1, source: T2) => DeepMerge<T1, T2>;
+type DeepMergeAllFn = <T extends Array<any>>(...targets: T) => DeepMergeAll<{}, T>;
 
-export type Primitive =
+type Primitive =
   | null
   | undefined
   | string
@@ -11,14 +13,13 @@ export type Primitive =
   | symbol
   | bigint;
 
-export type BuiltIns = Primitive | Date | RegExp;
+type BuiltIns = Primitive | Date | RegExp;
 
 type MergeTypes<T, U> = T extends Array<infer A1>
   ? U extends Array<infer A2>
   ? Array<A1 | A2>
   : T
   : U
-
 
 type DifferenceKeys<
   T,
@@ -46,16 +47,20 @@ type DeepMerge<T, U> =
   ? DeepMergeHelper<T, U>
   : U
 
-interface Options {
-  symbols?: boolean
-}
+type First<T> = T extends [infer _I, ...infer _Rest] ? _I : never;
+type Rest<T> = T extends [infer _I, ...infer _Rest] ? _Rest : never
 
-declare function all(objects: object[], options?: Options): object;
-declare function all<T>(objects: Partial<T>[], options?: Options): T;
+type DeepMergeAll<R, T> = First<T> extends never
+  ? R
+  : DeepMergeAll<DeepMerge<R, First<T>>, Rest<T>>;
+
+interface Options {
+  symbols?: boolean;
+  all?: boolean;
+}
 
 export default deepmerge
 export {
   deepmerge,
-  Options,
-  all
+  Options
 }

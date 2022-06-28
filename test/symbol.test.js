@@ -11,7 +11,7 @@ test('copy symbol keys in target that do not exist on the target', function (t) 
   const res = deepmerge(target, src)
 
   t.equal(res[mySymbol], 'value1')
-  t.deepEqual(Object.getOwnPropertySymbols(res), Object.getOwnPropertySymbols(src))
+  t.same(Object.getOwnPropertySymbols(res), Object.getOwnPropertySymbols(src))
   t.end()
 })
 
