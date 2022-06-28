@@ -1,37 +1,40 @@
-# skeleton
+# @fastify/deepmerge
 
-Template repository to create standardized Fastify plugins.
+[![NPM version](https://img.shields.io/npm/v/@fastify/deepmerge.svg?style=flat)](https://www.npmjs.com/package/@fastify/deepmerge)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-# Getting started
+Merges the enumerable properties of two or more objects deeply.
 
-- Click on `Use this template` above to create a new repository based on this repository.
+### Install
+```
+npm i @fastify/deepmerge
+```
 
-# What's included?
+### Usage
 
-1. Github CI Actions for installing, testing your package.
-2. Github CI Actions to validate different package managers.
-3. Dependabot V2 config to automate dependency updates.
-4. Template for the GitHub App [Stale](https://github.com/apps/stale) to mark issues as stale. 
-5. Template for the GitHub App [tests-checker](https://github.com/apps/tests-checker) to check if a PR contains tests.
-
-# Repository structure
+The module exports a function, which provides a function to deepmerge Objects. 
 
 ```
-├── .github
-│   ├── workflows
-│   │   ├── ci.yml
-│   │   └── package-manager-ci.yml
-│   ├── .stale.yml
-│   ├── dependabot.yml
-│   └── tests_checker.yml
-│
-├── docs (Documentation)
-│   
-├── examples (Code examples)
-│
-├── test (Application tests)
-│   
-├── types (Typescript types)
-│  
-└── README.md
+deepmerge(options)
 ```
+
+`options` is optional and can contain following values
+
+- `symbols` (`boolean`, optional) - should also merge object-keys which are symbols, default is false
+- `all` (`boolean`, optional) - merges all parameters, default is false
+
+```js
+const deepmerge = require('@fastify/deepmegre')()
+const result = deepmerge({a: 'value'}, { b: 404 })
+console.log(result) // {a: 'value',  b: 404 }
+```
+
+```js
+const deepmerge = require('@fastify/deepmegre')({ all: true })
+const result = deepmerge({a: 'value'}, { b: 404 }, { a: 404 })
+console.log(result) // {a: 404,  b: 404 }
+```
+
+## License
+
+Licensed under [MIT](./LICENSE).
