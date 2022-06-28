@@ -1,7 +1,7 @@
 {
   "name": "@fastify/deepmerge",
   "version": "1.0.0",
-  "description": "Template repository to create standardized Fastify plugins.",
+  "description": "Merges the enumerable properties of two or more objects deeply.",
   "main": "index.js",
   "types": "types/index.d.ts",
   "directories": {
