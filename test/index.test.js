@@ -461,6 +461,14 @@ test('should overwrite values when property is initialised but undefined', funct
   t.end()
 })
 
+test('should overwrite null with the source', function (t) {
+  const expected = { a: 'string' }
+  const actual = deepmerge(null, { a: 'string' })
+
+  t.same(actual, expected)
+  t.end()
+})
+
 test('dates should copy correctly in an array', function (t) {
   const monday = new Date('2016-09-27T01:08:12.761Z')
   const tuesday = new Date('2016-09-28T01:18:12.761Z')

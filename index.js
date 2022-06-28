@@ -32,7 +32,8 @@ function deepmergeConstructor (options) {
         const key = keys[i]
         result[key] = map(target[key])
       }
-    } else if (typeof target !== 'object' || target === null) {
+    }
+    if (typeof target !== 'object' || target === null) {
       return map(source)
     }
 
