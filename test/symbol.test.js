@@ -29,3 +29,20 @@ test('copy symbol keys in target that do exist on the target', function (t) {
   t.equal(res[mySymbol], 'value1')
   t.end()
 })
+
+test('does not copy enumerable symbol keys in source', function (t) {
+  const mySymbol = Symbol('test')
+  const src = { }
+  const target = { [mySymbol]: 'wat' }
+
+  Object.defineProperty(src, mySymbol, {
+    value: 'value1',
+    writable: false,
+    enumerable: false
+  })
+
+  const res = deepmerge(target, src)
+
+  t.equal(res[mySymbol], 'wat')
+  t.end()
+})
