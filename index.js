@@ -6,9 +6,6 @@
 
 function deepmergeConstructor (options) {
   const prototypeKeys = ['constructor', '__proto__', 'prototype']
-  function isPrototypeKey (value) {
-    return prototypeKeys.indexOf(value) !== -1
-  }
 
   function isNotPrototypeKey (value) {
     return prototypeKeys.indexOf(value) === -1
@@ -84,14 +81,11 @@ function deepmergeConstructor (options) {
     }
 
     for (i = 0, il = sourceKeys.length; i < il; ++i) {
-      if (isPrototypeKey(key = sourceKeys[i])) {
-        continue
-      }
-      if (key in target) {
-        ((targetKeys.indexOf(key) !== -1) && (result[key] = _deepmerge(target[key], source[key])))
-        continue
-      }
-      result[key] = map(source[key])
+      isNotPrototypeKey(key = sourceKeys[i]) &&
+      (
+        key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true) || // eslint-disable-line no-mixed-operators
+        (result[key] = map(source[key]))
+      )
     }
     return result
   }
