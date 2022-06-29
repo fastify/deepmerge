@@ -507,7 +507,24 @@ test('dates should copy correctly in an array', function (t) {
   t.end()
 })
 
-test('merging objects with own __proto__', function (t) {
+test('merging objects with own __proto__ in target', function (t) {
+  const user = {}
+  const malicious = JSON.parse('{ "__proto__": { "admin": true } }')
+  const mergedObject = deepmerge(malicious, user)
+  t.notOk(mergedObject.__proto__.admin, 'non-plain properties should not be merged') // eslint-disable-line no-proto
+  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
+  t.end()
+})
+
+test('merging objects with own prototype in target', function (t) {
+  const user = {}
+  const malicious = JSON.parse('{ "prototype": { "admin": true } }')
+  const mergedObject = deepmerge(malicious, user)
+  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
+  t.end()
+})
+
+test('merging objects with own __proto__ in source', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "__proto__": { "admin": true } }')
   const mergedObject = deepmerge(user, malicious)
@@ -516,7 +533,7 @@ test('merging objects with own __proto__', function (t) {
   t.end()
 })
 
-test('merging objects with own prototype', function (t) {
+test('merging objects with own prototype in source', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "prototype": { "admin": true } }')
   const mergedObject = deepmerge(user, malicious)
