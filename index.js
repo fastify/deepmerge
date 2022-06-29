@@ -5,11 +5,13 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 function deepmergeConstructor (options) {
-  const propertyIsEnumerable = Object.prototype.propertyIsEnumerable
-
   const prototypeKeys = ['constructor', '__proto__', 'prototype']
   function isPrototypeKey (value) {
     return prototypeKeys.indexOf(value) !== -1
+  }
+
+  function isNotPrototypeKey (value) {
+    return prototypeKeys.indexOf(value) === -1
   }
 
   function cloneArray (value) {
@@ -36,6 +38,7 @@ function deepmergeConstructor (options) {
     return result
   }
 
+  const propertyIsEnumerable = Object.prototype.propertyIsEnumerable
   function getSymbolsAndKeys (value) {
     const result = Object.keys(value)
     const keys = Object.getOwnPropertySymbols(value)
@@ -71,27 +74,22 @@ function deepmergeConstructor (options) {
 
   function mergeObject (target, source) {
     const result = {}
-    let keys = getKeys(target)
+    const targetKeys = getKeys(target)
+    const sourceKeys = getKeys(source)
     let i, il, key
-    for (i = 0, il = keys.length; i < il; ++i) {
-      if (isPrototypeKey(key = keys[i])) {
-        continue
-      }
-      result[key] = map(target[key])
+    for (i = 0, il = targetKeys.length; i < il; ++i) {
+      isNotPrototypeKey(key = targetKeys[i]) &&
+      (sourceKeys.indexOf(key) === -1) &&
+      (result[key] = map(target[key]))
     }
 
-    keys = getKeys(source)
-    for (i = 0, il = keys.length; i < il; ++i) {
-      if (isPrototypeKey(key = keys[i])) {
+    for (i = 0, il = sourceKeys.length; i < il; ++i) {
+      if (isPrototypeKey(key = sourceKeys[i])) {
         continue
       }
       if (key in target) {
-        if (!propertyIsEnumerable.call(target, key)) {
-          continue
-        } else if (isMergeableObject(source[key])) {
-          result[key] = _deepmerge(target[key], source[key])
-          continue
-        }
+        ((targetKeys.indexOf(key) !== -1) && (result[key] = _deepmerge(target[key], source[key])))
+        continue
       }
       result[key] = map(source[key])
     }
