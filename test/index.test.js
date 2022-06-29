@@ -132,7 +132,7 @@ test('should clone source and target', function (t) {
     }
   }
 
-  const merged = deepmerge(target, src, { clone: true })
+  const merged = deepmerge(target, src)
 
   t.same(merged, expected)
 
@@ -289,7 +289,7 @@ test('should work on array properties with clone option', function (t) {
   t.same(target, {
     key1: ['one', 'two']
   })
-  const merged = deepmerge(target, src, { clone: true })
+  const merged = deepmerge(target, src)
   t.not(merged.key1, src.key1)
   t.not(merged.key1, target.key1)
   t.not(merged.key2, src.key2)
@@ -337,7 +337,7 @@ test('should work on array of objects with clone option', function (t) {
     { key3: ['five'] }
   ]
 
-  const merged = deepmerge(target, src, { clone: true })
+  const merged = deepmerge(target, src)
   t.same(merged, expected)
   t.ok(Array.isArray(deepmerge(target, src)), 'result should be an array')
   t.ok(Array.isArray(deepmerge(target, src)[0].key1), 'subkey should be an array too')
@@ -364,7 +364,7 @@ test('should treat regular expressions like primitive values and should not' +
   const target = { key1: /abc/ }
   const src = { key1: /efg/ }
 
-  const output = deepmerge(target, src, { clone: true })
+  const output = deepmerge(target, src)
 
   t.equal(output.key1, src.key1)
   t.end()
@@ -404,7 +404,7 @@ test('should treat dates like primitives and should not clone even with clone' +
     key: tuesday
   }
 
-  const actual = deepmerge(target, source, { clone: true })
+  const actual = deepmerge(target, source)
 
   t.equal(actual.key, tuesday)
   t.end()
@@ -426,7 +426,7 @@ test('should clone array\'s element if it is object', function (t) {
   const target = []
   const source = [a]
 
-  const output = deepmerge(target, source, { clone: true })
+  const output = deepmerge(target, source)
 
   t.not(output[0], a)
   t.equal(output[0].key, 'yup')
@@ -437,7 +437,7 @@ test('should clone an array property when there is no target array', function (t
   const someObject = {}
   const target = {}
   const source = { ary: [someObject] }
-  const output = deepmerge(target, source, { clone: true })
+  const output = deepmerge(target, source)
 
   t.same(output, { ary: [{}] })
   t.not(output.ary[0], someObject)
