@@ -207,6 +207,28 @@ test('should replace arrays with objects', function (t) {
   t.end()
 })
 
+test('should replace object with primitive', function (t) {
+  const target = { key1: new Date() }
+
+  const src = 'test'
+
+  const expected = 'test'
+
+  t.same(deepmerge(target, src), expected)
+  t.end()
+})
+
+test('should replace Date with RegExp', function (t) {
+  const target = new Date()
+
+  const src = /a/g
+
+  const expected = /a/g
+
+  t.same(deepmerge(target, src), expected)
+  t.end()
+})
+
 test('should replace dates with arrays', function (t) {
   const target = { key1: new Date() }
 
