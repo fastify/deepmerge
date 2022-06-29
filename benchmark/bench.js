@@ -1,3 +1,5 @@
+'use strict'
+
 const Benchmark = require('benchmark')
 const deepmerge = require('..')({ symbol: false })
 
