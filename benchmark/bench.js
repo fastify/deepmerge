@@ -15,10 +15,15 @@ const targetNested = {
   key2: 'value2'
 }
 
+const primitive = 'primitive'
+
 const ArraySrc = [{ ...srcSimple }, { ...srcSimple }, { ...srcSimple }, { ...srcSimple }, { ...srcSimple }]
 const ArrayTarget = [{ ...targetSimple }, { ...targetSimple }, { ...targetSimple }, { ...targetSimple }, { ...targetSimple }]
 
 new Benchmark.Suite()
+  .add('deepmerge with primitive', function () {
+    deepmerge(targetSimple, primitive)
+  })
   .add('deepmerge existing simple keys in target at the roots', function () {
     deepmerge(ArrayTarget, ArraySrc)
   })
