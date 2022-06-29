@@ -1,5 +1,5 @@
 const Benchmark = require('benchmark')
-const deepmerge = require('..')({ symbol: false })
+const deepmerge = require('..')({ symbol: false, all: true })
 
 const srcSimple = { key1: 'changed', key2: 'value2' }
 const targetSimple = { key1: 'value1', key3: 'value3' }
