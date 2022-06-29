@@ -16,7 +16,7 @@ function deepmergeConstructor (options) {
     const il = value.length
     const result = new Array(il)
     for (i = 0; i < il; ++i) {
-      result[i] = map(value[i])
+      result[i] = clone(value[i])
     }
     return result
   }
@@ -27,10 +27,10 @@ function deepmergeConstructor (options) {
     let i = 0
     const result = new Array(tl + sl)
     for (i = 0; i < tl; ++i) {
-      result[i] = map(target[i])
+      result[i] = clone(target[i])
     }
     for (i = 0; i < sl; ++i) {
-      result[i + tl] = map(source[i])
+      result[i + tl] = clone(source[i])
     }
     return result
   }
@@ -61,7 +61,7 @@ function deepmergeConstructor (options) {
     return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
   }
 
-  function map (entry) {
+  function clone (entry) {
     return isMergeableObject(entry)
       ? Array.isArray(entry)
         ? cloneArray(entry)
@@ -77,14 +77,14 @@ function deepmergeConstructor (options) {
     for (i = 0, il = targetKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = targetKeys[i]) &&
       (sourceKeys.indexOf(key) === -1) &&
-      (result[key] = map(target[key]))
+      (result[key] = clone(target[key]))
     }
 
     for (i = 0, il = sourceKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = sourceKeys[i]) &&
       (
         key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true) || // eslint-disable-line no-mixed-operators
-        (result[key] = map(source[key]))
+        (result[key] = clone(source[key]))
       )
     }
     return result
@@ -97,11 +97,11 @@ function deepmergeConstructor (options) {
     if (isPrimitive(source)) {
       return source
     } else if (isPrimitiveOrBuiltIn(target)) {
-      return map(source)
+      return clone(source)
     } else if (sourceIsArray && targetIsArray) {
       return concatArrays(target, source)
     } else if (sourceIsArray !== targetIsArray) {
-      return map(source)
+      return clone(source)
     } else {
       return mergeObject(target, source)
     }
@@ -112,7 +112,7 @@ function deepmergeConstructor (options) {
       case 0:
         return {}
       case 1:
-        return map(arguments[0])
+        return clone(arguments[0])
       case 2:
         return _deepmerge(arguments[0], arguments[1])
     }
