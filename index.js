@@ -6,55 +6,18 @@
 
 function deepmergeConstructor (options) {
   const propertyIsEnumerable = Object.prototype.propertyIsEnumerable
-  function getSymbolsAndKeys (value) {
-    const result = Object.keys(value)
-    const keys = Object.getOwnPropertySymbols(value)
-    for (let i = 0, il = keys.length; i < il; ++i) {
-      propertyIsEnumerable.call(value, keys[i]) && result.push(keys[i])
-    }
-    return result
+
+  const prototypeKeys = ['constructor', '__proto__', 'prototype']
+  function isPrototypeKey (value) {
+    return prototypeKeys.indexOf(value) !== -1
   }
 
-  const getKeys = options && options.symbols
-    ? getSymbolsAndKeys
-    : Object.keys
-
-  function isMergeableObject (value) {
-    return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date)
-  }
-
-  function map (entry) {
-    return isMergeableObject(entry) ? _deepmerge(Array.isArray(entry) ? [] : {}, entry) : entry
-  }
-
-  function mergeObject (target, source) {
-    const result = {}
-    if (isMergeableObject(target)) {
-      const keys = getKeys(target)
-      let i, il
-      for (i = 0, il = keys.length; i < il; ++i) {
-        const key = keys[i]
-        result[key] = map(target[key])
-      }
-    }
-    if (typeof target !== 'object' || target === null) {
-      return map(source)
-    }
-
-    const keys = getKeys(source)
-    let i, il
-    for (i = 0, il = keys.length; i < il; ++i) {
-      const key = keys[i]
-
-      if (key in target) {
-        if (!(Object.hasOwnProperty.call(target, key)) && !(Object.propertyIsEnumerable.call(target, key))) {
-          continue
-        } else if (isMergeableObject(source[key])) {
-          result[key] = _deepmerge(target[key], source[key])
-          continue
-        }
-      }
-      result[key] = map(source[key])
+  function cloneArray (value) {
+    let i = 0
+    const il = value.length
+    const result = new Array(il)
+    for (i = 0; i < il; ++i) {
+      result[i] = map(value[i])
     }
     return result
   }
@@ -73,21 +36,95 @@ function deepmergeConstructor (options) {
     return result
   }
 
+  function getSymbolsAndKeys (value) {
+    const result = Object.keys(value)
+    const keys = Object.getOwnPropertySymbols(value)
+    for (let i = 0, il = keys.length; i < il; ++i) {
+      propertyIsEnumerable.call(value, keys[i]) && result.push(keys[i])
+    }
+    return result
+  }
+
+  const getKeys = options && options.symbols
+    ? getSymbolsAndKeys
+    : Object.keys
+
+  function isMergeableObject (value) {
+    return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date)
+  }
+
+  function isPrimitive (value) {
+    return typeof value !== 'object' || value === null
+  }
+
+  function isPrimitiveOrBuiltIn (value) {
+    return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
+  }
+
+  function map (entry) {
+    return isMergeableObject(entry)
+      ? Array.isArray(entry)
+        ? cloneArray(entry)
+        : mergeObject({}, entry)
+      : entry
+  }
+
+  function mergeObject (target, source) {
+    const result = {}
+    let keys = getKeys(target)
+    let i, il, key
+    for (i = 0, il = keys.length; i < il; ++i) {
+      if (isPrototypeKey(key = keys[i])) {
+        continue
+      }
+      result[key] = map(target[key])
+    }
+
+    keys = getKeys(source)
+    for (i = 0, il = keys.length; i < il; ++i) {
+      if (isPrototypeKey(key = keys[i])) {
+        continue
+      }
+      if (key in target) {
+        if (!propertyIsEnumerable.call(target, key)) {
+          continue
+        } else if (isMergeableObject(source[key])) {
+          result[key] = _deepmerge(target[key], source[key])
+          continue
+        }
+      }
+      result[key] = map(source[key])
+    }
+    return result
+  }
+
   function _deepmerge (target, source) {
     const sourceIsArray = Array.isArray(source)
     const targetIsArray = Array.isArray(target)
 
-    if (sourceIsArray !== targetIsArray) {
+    if (isPrimitive(source)) {
+      return source
+    } else if (isPrimitiveOrBuiltIn(target)) {
       return map(source)
-    } else if (sourceIsArray) {
+    } else if (sourceIsArray && targetIsArray) {
       return concatArrays(target, source)
+    } else if (sourceIsArray !== targetIsArray) {
+      return map(source)
     } else {
       return mergeObject(target, source)
     }
   }
 
   function _deepmergeAll () {
-    let result = {}
+    switch (arguments.length) {
+      case 0:
+        return {}
+      case 1:
+        return map(arguments[0])
+      case 2:
+        return _deepmerge(arguments[0], arguments[1])
+    }
+    let result
     for (let i = 0, il = arguments.length; i < il; ++i) {
       result = _deepmerge(result, arguments[i])
     }

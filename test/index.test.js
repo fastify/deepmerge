@@ -541,7 +541,7 @@ test('merging objects with own prototype in source', function (t) {
   t.end()
 })
 
-test('merging objects with plain and non-plain properties', function (t) {
+test('merging objects with plain and non-plain properties in target', function (t) {
   const parent = {
     parentKey: 'should be undefined'
   }
@@ -559,6 +559,27 @@ test('merging objects with plain and non-plain properties', function (t) {
   t.equal(undefined, mergedObject.parentKey, 'inherited properties of target should be removed, not merged or ignored')
   t.equal('bar', mergedObject.plainKey, 'enumerable own properties of target should be merged')
   t.equal('baz', mergedObject.newKey, 'properties not yet on target should be merged')
+  t.end()
+})
+
+test('merging objects with plain and non-plain properties in source', function (t) {
+  const parent = {
+    parentKey: 'should be foo'
+  }
+
+  const source = Object.create(parent)
+  source.plainKey = 'bar'
+
+  const target = {
+    parentKey: 'foo',
+    plainKey: 'should be bar',
+    newKey: 'baz'
+  }
+
+  const mergedObject = deepmerge(target, source)
+  t.equal('foo', mergedObject.parentKey, 'inherited properties of source should not be merged')
+  t.equal('bar', mergedObject.plainKey, 'enumerable own properties of source should be merged')
+  t.equal('baz', mergedObject.newKey, 'properties set on target should not be modified')
   t.end()
 })
 
