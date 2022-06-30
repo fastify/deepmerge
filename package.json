@@ -4,11 +4,7 @@
   "description": "Merges the enumerable properties of two or more objects deeply.",
   "main": "index.js",
   "types": "types/index.d.ts",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "bench": "node ./benchmark/bench.js",
     "lint:fix": "standard --fix",
     "lint:ci": "standard",
     "test:unit": "tap -J test/*.test.js test/**/*.test.js",
@@ -26,7 +22,6 @@
   },
   "homepage": "https://github.com/fastify/deepmerge#readme",
   "devDependencies": {
-    "benchmark": "^2.1.4",
     "standard": "^17.0.0",
     "tap": "^16.3.0",
     "tsd": "^0.21.0"
@@ -39,6 +34,8 @@
   ],
   "keywords": [
     "merge",
-    "deep"
+    "deep",
+    "recursive",
+    "object"
   ]
 }
