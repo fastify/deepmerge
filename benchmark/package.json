@@ -1,0 +1,23 @@
+{
+  "name": "benchmarks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bench.all.js",
+  "private": true,
+  "scripts": {
+    "bench": "node ./bench.js",
+    "bench:all": "node ./bench.all.js",
+    "bench:compare": "node ./bench.compare.js",
+    "bench:compare:detailed": "node ./bench.compare.detailed.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "deepmerge": "^4.2.2",
+    "deepmerge-ts": "^4.2.1",
+    "lodash.merge": "^4.6.2",
+    "merge-deep": "^3.0.3",
+    "ts-deepmerge": "^2.0.1"
+  }
+}

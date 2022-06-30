@@ -1,0 +1,41 @@
+{
+  "name": "@fastify/deepmerge",
+  "version": "1.0.0",
+  "description": "Merges the enumerable properties of two or more objects deeply.",
+  "main": "index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "test": "npm run test:unit && npm run test:typescript",
+    "test:unit": "tap -J test/*.test.js test/**/*.test.js",
+    "test:typescript": "tsd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/deepmerge.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fastify/deepmerge/issues"
+  },
+  "homepage": "https://github.com/fastify/deepmerge#readme",
+  "devDependencies": {
+    "standard": "^17.0.0",
+    "tap": "^16.3.0",
+    "tsd": "^0.21.0"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "types/index.d.ts"
+  ],
+  "keywords": [
+    "merge",
+    "deep",
+    "recursive",
+    "object"
+  ]
+}
