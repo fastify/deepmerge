@@ -120,7 +120,7 @@ test('invoke merge on every item in array with clone should clone all elements',
 
   t.not(mergedWithClone.a, firstObject.a)
   t.not(mergedWithClone.b, secondObject.b)
-  t.not(mergedWithClone.c, thirdObject.c)
+  t.not(mergedWithClone.c.f, thirdObject.c.f)
 
   t.end()
 })
