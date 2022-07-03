@@ -138,12 +138,16 @@ function deepmergeConstructor (options) {
     }
   }
 
+  const createObject = options && options.nullPrototype === true
+    ? function () { return Object.create(null) }
+    : function () { return {} }
+
   function _deepmergeAll () {
     switch (arguments.length) {
       case 0:
-        return {}
+        return createObject()
       case 1:
-        return clone(arguments[0])
+        return _deepmerge({}, arguments[0])
       case 2:
         return _deepmerge(arguments[0], arguments[1])
     }
