@@ -609,6 +609,7 @@ test('OpenAPI Schema with prototype polluting properties', function (t) {
     type: 'object',
     properties: {
       constructor: 'constructor',
+      __proto__: 'proto',
       prototype: 'prototype'
     }
   }
