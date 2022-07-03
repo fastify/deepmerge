@@ -67,7 +67,7 @@ function deepmergeConstructor (options) {
     return isMergeableObject(entry)
       ? Array.isArray(entry)
         ? cloneArray(entry)
-        : mergeObject({}, entry)
+        : cloneObject(entry)
       : entry
   }
 
@@ -97,23 +97,52 @@ function deepmergeConstructor (options) {
     return result
   }
 
-  function mergeObjectWithPrototype (target, source) {
-    const targetKeys = getKeys(target)
-    const sourceKeys = getKeys(source)
+  function cloneObjectWithPrototype (target) {
     const result = {}
+
+    const targetKeys = getKeys(target)
     let i, il, key
     for (i = 0, il = targetKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = targetKeys[i]) &&
-        (sourceKeys.indexOf(key) === -1) &&
         (result[key] = clone(target[key]))
+    }
+    return result
+  }
+
+  function cloneObjectNullPrototype (target) {
+    const result = Object.create(null)
+
+    const targetKeys = getKeys(target)
+    let i, il, key
+    for (i = 0, il = targetKeys.length; i < il; ++i) {
+      key = targetKeys[i]
+      result[key] = clone(target[key])
+    }
+    return result
+  }
+
+  const cloneObject = options && options.nullPrototype === true
+    ? cloneObjectNullPrototype
+    : cloneObjectWithPrototype
+
+  function mergeObjectWithPrototype (target, source) {
+    const result = {}
+
+    const targetKeys = getKeys(target)
+    const sourceKeys = getKeys(source)
+    let i, il, key
+    for (i = 0, il = targetKeys.length; i < il; ++i) {
+      isNotPrototypeKey(key = targetKeys[i]) &&
+          (sourceKeys.indexOf(key) === -1) &&
+          (result[key] = clone(target[key]))
     }
 
     for (i = 0, il = sourceKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = sourceKeys[i]) &&
-        (
-          key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true) || // eslint-disable-line no-mixed-operators
-          (result[key] = clone(source[key]))
-        )
+          (
+            key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true) || // eslint-disable-line no-mixed-operators
+            (result[key] = clone(source[key]))
+          )
     }
     return result
   }
