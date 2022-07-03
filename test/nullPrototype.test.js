@@ -9,12 +9,22 @@ const test = require('tap').test
 
 test('OpenAPI Schema with prototype polluting properties', function (t) {
   const schema = JSON.parse('{"type":"object","properties":{"constructor":"constructor", "__proto__": "__proto__", "prototype":"prototype"}}')
-  const mergedObject = deepmerge({}, schema)
-  Object.keys(mergedObject)
-  t.same(Object.keys(schema), Object.keys(mergedObject))
-  t.same(mergedObject.properties.constructor, 'constructor')
-  t.same(mergedObject.properties.prototype, 'prototype')
-  t.same(mergedObject.properties.__proto__, '__proto__') // eslint-disable-line no-proto
+  t.same(Object.keys(schema), Object.keys(deepmerge({}, schema)))
+  t.same(deepmerge({}, schema).properties.constructor, 'constructor')
+  t.same(deepmerge({}, schema).properties.prototype, 'prototype')
+  t.same(deepmerge({}, schema).properties.__proto__, '__proto__') // eslint-disable-line no-proto
+  t.same(Object.keys(schema), Object.keys(deepmerge(schema, {})))
+  t.same(deepmerge(schema, {}).properties.constructor, 'constructor')
+  t.same(deepmerge(schema, {}).properties.prototype, 'prototype')
+  t.same(deepmerge(schema, {}).properties.__proto__, '__proto__') // eslint-disable-line no-proto
+  t.same(Object.keys(schema), Object.keys(deepmerge(schema, Object.create(null))))
+  t.same(deepmerge(schema, Object.create(null)).properties.constructor, 'constructor')
+  t.same(deepmerge(schema, Object.create(null)).properties.prototype, 'prototype')
+  t.same(deepmerge(schema, Object.create(null)).properties.__proto__, '__proto__') // eslint-disable-line no-proto
+  t.same(Object.keys(schema), Object.keys(deepmerge(Object.create(null), schema)))
+  t.same(deepmerge(Object.create(null), schema).properties.constructor, 'constructor')
+  t.same(deepmerge(Object.create(null), schema).properties.prototype, 'prototype')
+  t.same(deepmerge(Object.create(null), schema).properties.__proto__, '__proto__') // eslint-disable-line no-proto
   t.end()
 })
 
@@ -25,7 +35,7 @@ test('merging objects with empty string as key', function (t) {
   t.end()
 })
 
-test('merging objects with own __proto__ in target', function (t) {
+test('merging objects with __proto__ in target', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "__proto__": { "admin": true } }')
   const mergedObject = deepmerge(malicious, user)
@@ -34,7 +44,7 @@ test('merging objects with own __proto__ in target', function (t) {
   t.end()
 })
 
-test('merging objects with own prototype in target', function (t) {
+test('merging objects with prototype in target', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "prototype": { "admin": true } }')
   const mergedObject = deepmerge(malicious, user)
@@ -43,7 +53,16 @@ test('merging objects with own prototype in target', function (t) {
   t.end()
 })
 
-test('merging objects with own __proto__ in source', function (t) {
+test('merging objects with __proto__ in source', function (t) {
+  const user = {}
+  const malicious = JSON.parse('{ "prototype": { "admin": true } }')
+  const mergedObject = deepmerge(user, malicious)
+  t.ok(mergedObject.prototype.admin === true, 'non-plain properties should be merged') // eslint-disable-line no-proto
+  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
+  t.end()
+})
+
+test('merging objects with __proto__ in source', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "__proto__": { "admin": true } }')
   const mergedObject = deepmerge(user, malicious)
@@ -52,7 +71,16 @@ test('merging objects with own __proto__ in source', function (t) {
   t.end()
 })
 
-test('merging objects with own prototype in source', function (t) {
+test('merging objects with constructor in source', function (t) {
+  const user = {}
+  const malicious = JSON.parse('{ "constructor": { "admin": true } }')
+  const mergedObject = deepmerge(user, malicious)
+  t.ok(mergedObject.constructor.admin === true, 'non-plain properties should be merged')
+  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
+  t.end()
+})
+
+test('merging objects with prototype in source', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "prototype": { "admin": true } }')
   const mergedObject = deepmerge(user, malicious)

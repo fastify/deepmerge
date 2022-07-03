@@ -5,12 +5,20 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 function deepmergeConstructor (options) {
-  const prototypeKeys = ['constructor', '__proto__', 'prototype']
   function isPrototypeKey (value) {
-    return prototypeKeys.indexOf(value) !== -1
+    return (
+      value === 'constructor' ||
+      value === 'prototype' ||
+      value === '__proto__'
+    )
   }
+
   function isNotPrototypeKey (value) {
-    return prototypeKeys.indexOf(value) === -1
+    return (
+      value !== 'constructor' &&
+      value !== 'prototype' &&
+      value !== '__proto__'
+    )
   }
 
   function cloneArray (value) {
