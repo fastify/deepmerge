@@ -82,6 +82,7 @@ test('Work just fine if first argument is an array with least than two elements'
   const actual = deepmergeNull({ example: true })
   const expected = { example: true }
   t.same(actual, expected)
+  t.notOk(actual.toString)
   t.end()
 })
 
