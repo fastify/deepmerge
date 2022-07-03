@@ -43,7 +43,7 @@ new Benchmark.Suite()
   .add('@fastify/deepmerge: merge two arrays containing strings', function () {
     fastifyDeepmerge(simpleArrayTarget, simpleArraySource)
   })
-  .add('@fastify/deepmerge: two merge arrays containing objects', function () {
+  .add('@fastify/deepmerge: merge two arrays containing objects', function () {
     fastifyDeepmerge(complexArrayTarget, complexArraySource)
   })
   .add('@fastify/deepmerge: merge two flat objects', function () {
@@ -61,7 +61,7 @@ new Benchmark.Suite()
   .add('deepmerge: merge two arrays containing strings', function () {
     deepmerge(simpleArrayTarget, simpleArraySource)
   })
-  .add('deepmerge: two merge arrays containing objects', function () {
+  .add('deepmerge: merge two arrays containing objects', function () {
     deepmerge(complexArrayTarget, complexArraySource)
   })
   .add('deepmerge: merge two flat objects', function () {
@@ -79,7 +79,7 @@ new Benchmark.Suite()
   .add('merge-deep: merge two arrays containing strings', function () {
     mergedeep(simpleArrayTarget, simpleArraySource)
   })
-  .add('merge-deep: two merge arrays containing objects', function () {
+  .add('merge-deep: merge two arrays containing objects', function () {
     mergedeep(complexArrayTarget, complexArraySource)
   })
   .add('merge-deep: merge two flat objects', function () {
@@ -97,7 +97,7 @@ new Benchmark.Suite()
   .add('ts-deepmerge: merge two arrays containing strings', function () {
     tsDeepmerge(simpleArrayTarget, simpleArraySource)
   })
-  .add('ts-deepmerge: two merge arrays containing objects', function () {
+  .add('ts-deepmerge: merge two arrays containing objects', function () {
     tsDeepmerge(complexArrayTarget, complexArraySource)
   })
   .add('ts-deepmerge: merge two flat objects', function () {
@@ -115,7 +115,7 @@ new Benchmark.Suite()
   .add('deepmerge-ts: merge two arrays containing strings', function () {
     deepmergeTs(simpleArrayTarget, simpleArraySource)
   })
-  .add('deepmerge-ts: two merge arrays containing objects', function () {
+  .add('deepmerge-ts: merge two arrays containing objects', function () {
     deepmergeTs(complexArrayTarget, complexArraySource)
   })
   .add('deepmerge-ts: merge two flat objects', function () {
@@ -133,7 +133,7 @@ new Benchmark.Suite()
   .add('lodash.merge: merge two arrays containing strings', function () {
     lodashMerge(simpleArrayTarget, simpleArraySource)
   })
-  .add('lodash.merge: two merge arrays containing objects', function () {
+  .add('lodash.merge: merge two arrays containing objects', function () {
     lodashMerge(complexArrayTarget, complexArraySource)
   })
   .add('lodash.merge: merge two flat objects', function () {

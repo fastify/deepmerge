@@ -38,7 +38,7 @@ new Benchmark.Suite()
   .add('@fastify/deepmerge: merge two arrays containing strings', function () {
     deepmerge(simpleArrayTarget, simpleArraySource)
   })
-  .add('@fastify/deepmerge: two merge arrays containing objects', function () {
+  .add('@fastify/deepmerge: merge two arrays containing objects', function () {
     deepmerge(complexArrayTarget, complexArraySource)
   })
   .add('@fastify/deepmerge: merge two flat objects', function () {
