@@ -6,7 +6,9 @@
 
 function deepmergeConstructor (options) {
   const prototypeKeys = ['constructor', '__proto__', 'prototype']
-
+  function isPrototypeKey (value) {
+    return prototypeKeys.indexOf(value) !== -1
+  }
   function isNotPrototypeKey (value) {
     return prototypeKeys.indexOf(value) === -1
   }
@@ -69,26 +71,55 @@ function deepmergeConstructor (options) {
       : entry
   }
 
-  function mergeObject (target, source) {
-    const result = {}
+  function mergeObjectNullPrototype (target, source) {
+    const result = Object.create(null)
     const targetKeys = getKeys(target)
     const sourceKeys = getKeys(source)
     let i, il, key
     for (i = 0, il = targetKeys.length; i < il; ++i) {
+      (key = targetKeys[i], true) &&
+        (sourceKeys.indexOf(key) === -1) &&
+        (result[key] = clone(target[key]))
+    }
+
+    for (i = 0, il = sourceKeys.length; i < il; ++i) {
+      key = sourceKeys[i]
+      if (key in target) {
+        if (targetKeys.indexOf(key) !== -1) {
+          result[key] = _deepmerge(target[key], source[key])
+        } else if (isPrototypeKey(key)) {
+          result[key] = clone(source[key])
+        }
+      } else {
+        result[key] = clone(source[key])
+      }
+    }
+    return result
+  }
+
+  function mergeObjectWithPrototype (target, source) {
+    const targetKeys = getKeys(target)
+    const sourceKeys = getKeys(source)
+    const result = {}
+    let i, il, key
+    for (i = 0, il = targetKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = targetKeys[i]) &&
-      (sourceKeys.indexOf(key) === -1) &&
-      (result[key] = clone(target[key]))
+        (sourceKeys.indexOf(key) === -1) &&
+        (result[key] = clone(target[key]))
     }
 
     for (i = 0, il = sourceKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = sourceKeys[i]) &&
-      (
-        key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true) || // eslint-disable-line no-mixed-operators
-        (result[key] = clone(source[key]))
-      )
+        (
+          key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true) || // eslint-disable-line no-mixed-operators
+          (result[key] = clone(source[key]))
+        )
     }
     return result
   }
+  const mergeObject = options && options.nullPrototype === true
+    ? mergeObjectNullPrototype
+    : mergeObjectWithPrototype
 
   function _deepmerge (target, source) {
     const sourceIsArray = Array.isArray(source)

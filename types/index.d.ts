@@ -55,6 +55,7 @@ type DeepMergeAll<R, T> = First<T> extends never
   : DeepMergeAll<DeepMerge<R, First<T>>, Rest<T>>;
 
 interface Options {
+  nullPrototype?: boolean;
   symbols?: boolean;
   all?: boolean;
 }

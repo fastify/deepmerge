@@ -12,6 +12,8 @@ expectError(deepmerge({ symbols: 2 }))
 expectError(deepmerge({ symbol: 2 }))
 
 expectAssignable<Function>(deepmerge({ symbols: true }))
+expectAssignable<Function>(deepmerge({ nullPrototype: true }))
+expectAssignable<Function>(deepmerge({ nullPrototype: false }))
 
 expectType<string>(deepmerge()('string', { a: 'string' }).a)
 expectType<string>(deepmerge()(1, { a: 'string' }).a)

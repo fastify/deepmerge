@@ -23,6 +23,7 @@ deepmerge(options)
 
 - `symbols` (`boolean`, optional) - should also merge object-keys which are symbols, default is false
 - `all` (`boolean`, optional) - merges all parameters, default is false
+- `nullPrototype` (`boolean, optional) - created Objects have no prototype so keys like constructor and prototype are allowed without having the risk of a prototype pollution but has a ca. 20 % performance penalty, default is false
 
 ```js
 const deepmerge = require('@fastify/deepmegre')()
@@ -48,6 +49,16 @@ The benchmarks are available in the benchmark-folder.
 @fastify/deepmerge: two merge arrays containing objects x 976,182 ops/sec ±0.46% (98 runs sampled)
 @fastify/deepmerge: merge two flat objects x 10,027,879 ops/sec ±0.36% (94 runs sampled)
 @fastify/deepmerge: merge nested objects x 5,341,227 ops/sec ±0.67% (94 runs sampled)
+```
+
+`npm run bench:nullprototype` - benchmark various use cases of deepmerge:
+```
+@fastify/deepmerge: merge regex with date x 1,256,395,320 ops/sec ±0.21% (99 runs sampled)
+@fastify/deepmerge: merge object with a primitive x 1,257,949,819 ops/sec ±0.20% (93 runs sampled)
+@fastify/deepmerge: merge two arrays containing strings x 25,051,036 ops/sec ±0.57% (94 runs sampled)
+@fastify/deepmerge: two merge arrays containing objects x 942,037 ops/sec ±0.43% (95 runs sampled)
+@fastify/deepmerge: merge two flat objects x 7,881,518 ops/sec ±0.64% (92 runs sampled)
+@fastify/deepmerge: merge nested objects x 4,751,207 ops/sec ±0.70% (95 runs sampled)
 ```
 
 `npm run bench:compare` - comparison of @fastify/deepmerge with other popular deepmerge implementation:
