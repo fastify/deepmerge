@@ -52,9 +52,9 @@ test('invoke merge on every item in array with clone should clone all elements',
 
   const mergedWithClone = deepmerge(firstObject, secondObject, thirdObject)
 
-  t.not(mergedWithClone.a, firstObject.a)
-  t.not(mergedWithClone.b, secondObject.b)
-  t.not(mergedWithClone.c, thirdObject.c)
+  t.same(mergedWithClone.a, firstObject.a)
+  t.same(mergedWithClone.b, secondObject.b)
+  t.same(mergedWithClone.c, thirdObject.c)
 
   t.end()
 })
@@ -66,9 +66,9 @@ test('invoke merge on every item in array without clone should clone all element
 
   const mergedWithoutClone = deepmerge(firstObject, secondObject, thirdObject)
 
-  t.not(mergedWithoutClone.a, firstObject.a)
-  t.not(mergedWithoutClone.b, secondObject.b)
-  t.not(mergedWithoutClone.c, thirdObject.c)
+  t.same(mergedWithoutClone.a, firstObject.a)
+  t.same(mergedWithoutClone.b, secondObject.b)
+  t.same(mergedWithoutClone.c, thirdObject.c)
 
   t.end()
 })
@@ -118,9 +118,9 @@ test('invoke merge on every item in array with clone should clone all elements',
 
   const mergedWithClone = deepmergeNull(firstObject, secondObject, thirdObject)
 
-  t.not(mergedWithClone.a, firstObject.a)
-  t.not(mergedWithClone.b, secondObject.b)
-  t.not(mergedWithClone.c.f, thirdObject.c.f)
+  t.same(mergedWithClone.a, firstObject.a)
+  t.same(mergedWithClone.b, secondObject.b)
+  t.same(mergedWithClone.c.f, thirdObject.c.f)
 
   t.end()
 })
@@ -132,9 +132,9 @@ test('invoke merge on every item in array without clone should clone all element
 
   const mergedWithoutClone = deepmergeNull(firstObject, secondObject, thirdObject)
 
-  t.not(mergedWithoutClone.a, firstObject.a)
-  t.not(mergedWithoutClone.b, secondObject.b)
-  t.not(mergedWithoutClone.c, thirdObject.c)
+  t.same(mergedWithoutClone.a, firstObject.a)
+  t.same(mergedWithoutClone.b, secondObject.b)
+  t.same(mergedWithoutClone.c.f, thirdObject.c.f)
 
   t.end()
 })
