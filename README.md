@@ -43,32 +43,32 @@ The benchmarks are available in the benchmark-folder.
 
 `npm run bench` - benchmark various use cases of deepmerge:
 ```
-@fastify/deepmerge: merge regex with date x 1,218,057,587 ops/sec ±0.42% (92 runs sampled)
-@fastify/deepmerge: merge object with a primitive x 1,227,135,062 ops/sec ±0.55% (95 runs sampled)
-@fastify/deepmerge: merge two arrays containing strings x 24,189,601 ops/sec ±0.81% (94 runs sampled)
-@fastify/deepmerge: merge two arrays containing objects x 1,484,734 ops/sec ±0.45% (90 runs sampled)
-@fastify/deepmerge: merge two flat objects x 13,058,801 ops/sec ±0.60% (95 runs sampled)
-@fastify/deepmerge: merge nested objects x 6,268,848 ops/sec ±0.43% (97 runs sampled)
+@fastify/deepmerge: merge regex with date x 1,245,263,207 ops/sec ±0.41% (99 runs sampled)
+@fastify/deepmerge: merge object with a primitive x 1,241,361,757 ops/sec ±0.40% (99 runs sampled)
+@fastify/deepmerge: merge two arrays containing strings x 24,765,578 ops/sec ±0.50% (94 runs sampled)
+@fastify/deepmerge: merge two arrays containing objects x 1,600,598 ops/sec ±0.64% (96 runs sampled)
+@fastify/deepmerge: merge two flat objects x 14,327,729 ops/sec ±0.57% (93 runs sampled)
+@fastify/deepmerge: merge nested objects x 7,319,512 ops/sec ±0.45% (96 runs sampled)
 ```
 
 `npm run bench:nullprototype` - benchmark deepmerge with nullPrototype set to true:
 ```
-@fastify/deepmerge: merge regex with date x 1,268,527,098 ops/sec ±0.12% (98 runs sampled)
-@fastify/deepmerge: merge object with a primitive x 1,276,444,240 ops/sec ±0.10% (98 runs sampled)
-@fastify/deepmerge: merge two arrays containing strings x 25,685,858 ops/sec ±0.24% (98 runs sampled)
-@fastify/deepmerge: merge two arrays containing objects x 1,572,714 ops/sec ±0.89% (96 runs sampled)
-@fastify/deepmerge: merge two flat objects x 10,009,494 ops/sec ±0.83% (89 runs sampled)
-@fastify/deepmerge: merge nested objects x 6,349,727 ops/sec ±0.66% (96 runs sampled)
+@fastify/deepmerge: merge regex with date x 1,241,641,471 ops/sec ±0.19% (99 runs sampled)
+@fastify/deepmerge: merge object with a primitive x 1,232,239,900 ops/sec ±0.49% (93 runs sampled)
+@fastify/deepmerge: merge two arrays containing strings x 24,893,133 ops/sec ±0.56% (95 runs sampled)
+@fastify/deepmerge: merge two arrays containing objects x 1,521,465 ops/sec ±0.83% (94 runs sampled)
+@fastify/deepmerge: merge two flat objects x 9,414,407 ops/sec ±0.61% (97 runs sampled)
+@fastify/deepmerge: merge nested objects x 5,865,123 ops/sec ±0.50% (93 runs sampled)
 ```
 
 `npm run bench:compare` - comparison of @fastify/deepmerge with other popular deepmerge implementation:
 ```
-@fastify/deepmerge x 569,163 ops/sec ±0.20% (100 runs sampled)
-deepmerge x 21,584 ops/sec ±0.65% (96 runs sampled)
-merge-deep x 89,263 ops/sec ±0.47% (99 runs sampled)
-ts-deepmerge x 186,674 ops/sec ±0.54% (92 runs sampled)
-deepmerge-ts x 184,958 ops/sec ±0.17% (96 runs sampled)
-lodash.merge x 90,968 ops/sec ±0.35% (95 runs sampled)
+@fastify/deepmerge x 618,229 ops/sec ±0.19% (99 runs sampled)
+deepmerge x 21,326 ops/sec ±0.43% (95 runs sampled)
+merge-deep x 86,034 ops/sec ±0.49% (98 runs sampled)
+ts-deepmerge x 183,827 ops/sec ±0.41% (99 runs sampled)
+deepmerge-ts x 179,950 ops/sec ±0.62% (95 runs sampled)
+lodash.merge x 89,655 ops/sec ±0.44% (99 runs sampled)
 ```
 
 ## License
