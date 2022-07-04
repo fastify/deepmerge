@@ -49,3 +49,22 @@ expectType<string>(deepmerge({all: true, symbols: true})({a: 'a'}, {b: 'a'}).b)
 expectType<number>(deepmerge({all: true, symbols: true})({a: 'a'}, {a: 2}).a)
 expectType<number>(deepmerge({all: true, symbols: true})({a: 'a'}, 2))
 expectType<string>(deepmerge({all: true, symbols: true})({a: 'a'}, 'string'))
+
+expectError(deepmerge({ mergeArray: function () { } }))
+expectError(deepmerge({ mergeArray: function () { return () => 'test' } }))
+deepmerge({
+  mergeArray: function (options) {
+    expectType<(value: any) => any>(options.clone)
+    const clone = options.clone
+    return function (target, source) {
+      return clone(target.concat(source))
+    }
+  }
+})
+deepmerge({
+  mergeArray: function () {
+    return function (target, source) {
+      return source
+    }
+  }
+})

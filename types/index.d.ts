@@ -54,7 +54,17 @@ type DeepMergeAll<R, T> = First<T> extends never
   ? R
   : DeepMergeAll<DeepMerge<R, First<T>>, Rest<T>>;
 
+type MergeArrayFnOptions = {
+  clone: (value: any) => any;
+  isMergeableObject: (value: any) => any;
+  deepmerge: DeepMergeFn;
+  getKeys: (value: object) => string[];
+}
+
+type MergeArrayFn = (options: MergeArrayFnOptions) => (target: any[], source: any[]) => any[]
+
 interface Options {
+  mergeArray?: MergeArrayFn;
   symbols?: boolean;
   all?: boolean;
 }

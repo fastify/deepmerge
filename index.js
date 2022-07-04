@@ -75,6 +75,10 @@ function deepmergeConstructor (options) {
     return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
   }
 
+  const mergeArray = options && typeof options.mergeArray === 'function'
+    ? options.mergeArray({ clone, deepmerge: _deepmerge, getKeys, isMergeableObject })
+    : concatArrays
+
   function clone (entry) {
     return isMergeableObject(entry)
       ? Array.isArray(entry)
@@ -113,7 +117,7 @@ function deepmergeConstructor (options) {
     } else if (isPrimitiveOrBuiltIn(target)) {
       return clone(source)
     } else if (sourceIsArray && targetIsArray) {
-      return concatArrays(target, source)
+      return mergeArray(target, source)
     } else if (sourceIsArray !== targetIsArray) {
       return clone(source)
     } else {

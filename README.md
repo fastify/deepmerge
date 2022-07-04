@@ -23,17 +23,40 @@ deepmerge(options)
 
 - `symbols` (`boolean`, optional) - should also merge object-keys which are symbols, default is false
 - `all` (`boolean`, optional) - merges all parameters, default is false
+- `mergeArray` (`function`, optional) - provide a function, which returns a function to add custom array merging function
 
 ```js
-const deepmerge = require('@fastify/deepmegre')()
+const deepmerge = require('@fastify/deepmerge')()
 const result = deepmerge({a: 'value'}, { b: 404 })
 console.log(result) // {a: 'value',  b: 404 }
 ```
 
 ```js
-const deepmerge = require('@fastify/deepmegre')({ all: true })
+const deepmerge = require('@fastify/deepmerge')({ all: true })
 const result = deepmerge({a: 'value'}, { b: 404 }, { a: 404 })
 console.log(result) // {a: 404,  b: 404 }
+```
+
+`mergeArray` has an options-parameter, which is an Object containing the following keys and values 
+
+```typescript
+clone: (value: any) => any;
+isMergeableObject: (value: any) => any;
+deepmerge: DeepMergeFn;
+getKeys: (value: object) => string[];
+```
+
+```js
+function overwriteMerge(options) {
+  const clone = options.clone
+  return function (target, source) {
+    return clone(source)
+  }
+}
+
+const deepmerge = require('@fastify/deepmerge')({ mergeArray: overwriteMerge })
+const result = deepmerge([1, 2, 3], [4, 5, 6])
+console.log(result) // [4, 5, 6]
 ```
 
 ## Benchmarks
