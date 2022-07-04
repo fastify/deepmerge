@@ -5,10 +5,12 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 function deepmergeConstructor (options) {
-  const prototypeKeys = ['constructor', '__proto__', 'prototype']
-
   function isNotPrototypeKey (value) {
-    return prototypeKeys.indexOf(value) === -1
+    return (
+      value !== 'constructor' &&
+      value !== 'prototype' &&
+      value !== '__proto__'
+    )
   }
 
   function cloneArray (value) {
@@ -17,6 +19,18 @@ function deepmergeConstructor (options) {
     const result = new Array(il)
     for (i = 0; i < il; ++i) {
       result[i] = clone(value[i])
+    }
+    return result
+  }
+
+  function cloneObject (target) {
+    const result = {}
+
+    const targetKeys = getKeys(target)
+    let i, il, key
+    for (i = 0, il = targetKeys.length; i < il; ++i) {
+      isNotPrototypeKey(key = targetKeys[i]) &&
+        (result[key] = clone(target[key]))
     }
     return result
   }
@@ -65,7 +79,7 @@ function deepmergeConstructor (options) {
     return isMergeableObject(entry)
       ? Array.isArray(entry)
         ? cloneArray(entry)
-        : mergeObject({}, entry)
+        : cloneObject(entry)
       : entry
   }
 

@@ -42,22 +42,22 @@ The benchmarks are available in the benchmark-folder.
 
 `npm run bench` - benchmark various use cases of deepmerge:
 ```
-@fastify/deepmerge: merge regex with date x 1,266,447,885 ops/sec ±0.14% (97 runs sampled)
-@fastify/deepmerge: merge object with a primitive x 1,266,435,016 ops/sec ±0.33% (97 runs sampled)
-@fastify/deepmerge: merge two arrays containing strings x 25,591,739 ops/sec ±0.24% (98 runs sampled)
-@fastify/deepmerge: two merge arrays containing objects x 976,182 ops/sec ±0.46% (98 runs sampled)
-@fastify/deepmerge: merge two flat objects x 10,027,879 ops/sec ±0.36% (94 runs sampled)
-@fastify/deepmerge: merge nested objects x 5,341,227 ops/sec ±0.67% (94 runs sampled)
+@@fastify/deepmerge: merge regex with date x 1,256,523,040 ops/sec ±0.16% (92 runs sampled)
+@fastify/deepmerge: merge object with a primitive x 1,256,082,915 ops/sec ±0.25% (97 runs sampled)
+@fastify/deepmerge: merge two arrays containing strings x 25,392,605 ops/sec ±0.22% (97 runs sampled)
+@fastify/deepmerge: two merge arrays containing objects x 1,655,426 ops/sec ±0.65% (96 runs sampled)
+@fastify/deepmerge: merge two flat objects x 15,571,029 ops/sec ±0.45% (96 runs sampled)
+@fastify/deepmerge: merge nested objects x 7,601,328 ops/sec ±0.31% (96 runs sampled)
 ```
 
 `npm run bench:compare` - comparison of @fastify/deepmerge with other popular deepmerge implementation:
 ```
-@fastify/deepmerge x 403,777 ops/sec ±0.22% (98 runs sampled)
-deepmerge x 21,143 ops/sec ±0.83% (93 runs sampled)
-merge-deep x 89,447 ops/sec ±0.59% (95 runs sampled)
-ts-deepmerge x 185,601 ops/sec ±0.59% (96 runs sampled)
-deepmerge-ts x 185,310 ops/sec ±0.50% (92 runs sampled)
-lodash.merge x 89,053 ops/sec ±0.37% (99 runs sampled)
+@fastify/deepmerge x 605,343 ops/sec ±0.87% (96 runs sampled)
+deepmerge x 20,312 ops/sec ±1.06% (92 runs sampled)
+merge-deep x 83,167 ops/sec ±1.30% (94 runs sampled)
+ts-deepmerge x 175,977 ops/sec ±0.57% (96 runs sampled)
+deepmerge-ts x 174,973 ops/sec ±0.44% (93 runs sampled)
+lodash.merge x 89,213 ops/sec ±0.70% (98 runs sampled)
 ```
 
 ## License
