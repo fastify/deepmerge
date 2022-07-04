@@ -56,7 +56,7 @@ type DeepMergeAll<R, T> = First<T> extends never
 
 type MergeArrayFnOptions = {
   clone: (value: any) => any;
-  isMergeableObject: (value: any) => any;
+  isMergeableObject: (value: any) => boolean;
   deepmerge: DeepMergeFn;
   getKeys: (value: object) => string[];
 }
