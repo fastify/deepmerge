@@ -37,7 +37,21 @@ const result = deepmerge({a: 'value'}, { b: 404 }, { a: 404 })
 console.log(result) // {a: 404,  b: 404 }
 ```
 
-`mergeArray` has an options-parameter, which is an Object containing the following keys and values 
+#### mergeArray
+
+The default mode to merge Arrays is to concat the source-Array to the target-Array.
+
+```js
+const target = [1, 2, 3]
+const source = [4, 5, 6]
+const deepmerge = require('@fastify/deepmerge')()
+const result = deepmerge(target, source)
+console.log(result) // [1, 2, 3, 4, 5, 6]
+```
+
+To overwrite the default behaviour regarding merging Arrays, you can provide a function to the
+`mergeArray` option of the deepmerge-function. The function provided to `mergeArray`
+gets an options-parameter passed, which is an Object containing the following keys and values.
 
 ```typescript
 clone: (value: any) => any;
@@ -46,17 +60,56 @@ deepmerge: DeepMergeFn;
 getKeys: (value: object) => string[];
 ```
 
+The `mergeAray`-Function needs to return the actual Array merging function, which accepts two parameters of type 
+Array, and returns a value.
+
+Example 1: Replace the target-Array with a clone of the source-Array.
+
 ```js
-function overwriteMerge(options) {
+function replaceByClonedSource(options) {
   const clone = options.clone
   return function (target, source) {
     return clone(source)
   }
 }
 
-const deepmerge = require('@fastify/deepmerge')({ mergeArray: overwriteMerge })
+const deepmerge = require('@fastify/deepmerge')({ mergeArray: replaceByClonedSource })
 const result = deepmerge([1, 2, 3], [4, 5, 6])
 console.log(result) // [4, 5, 6]
+```
+
+Example 2: Merge every element of the source-Array with the target-Array
+
+```js
+function deepmergeArray(options) {
+  const deepmerge = options.deepmerge
+  const clone = options.clone
+  return function (target, source) {
+    let i = 0
+    const tl = target.length
+    const sl = source.length
+    const il = Math.max(target.length, source.length)
+    const result = new Array(il)
+    for (i = 0; i < il; ++i) {
+      if (i < sl) {
+        result[i] = deepmerge(target[i], source[i])
+      } else {
+        result[i] = clone(target[i])
+      }
+    }
+    return result
+  }
+}
+
+// default behaviour
+const deepmergeConcatArray = require('@fastify/deepmerge')()
+const resultConcatArray = deepmergeConcatArray([{ a: [1, 2, 3 ]}], [{b: [4, 5, 6]}])
+console.log(resultConcatArray) // [ { a: [ 1, 2, 3 ]}, { b: [ 4, 5, 6 ] } ]
+
+// modified behaviour
+const deepmergeDeepmergeArray = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
+const resultDeepmergedArray = deepmergeDeepmergeArray([{ a: [1, 2, 3 ]}], [{b: [4, 5, 6]}])
+console.log(resultDeepmergedArray) // [ { a: [ 1, 2, 3 ], b: [ 4, 5, 6 ] } ]
 ```
 
 ## Benchmarks
