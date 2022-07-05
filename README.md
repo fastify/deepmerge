@@ -78,7 +78,7 @@ const result = deepmerge([1, 2, 3], [4, 5, 6])
 console.log(result) // [4, 5, 6]
 ```
 
-Example 2: Merge every element of the source-Array with the target-Array
+Example 2: Merge each element of the source-Array with the element at the same index-position of the target-Array.
 
 ```js
 function deepmergeArray(options) {
