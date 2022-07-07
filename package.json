@@ -1,6 +1,6 @@
 {
   "name": "@fastify/deepmerge",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Merges the enumerable properties of two or more objects deeply.",
   "main": "index.js",
   "types": "types/index.d.ts",
