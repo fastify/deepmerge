@@ -476,7 +476,7 @@ test('should overwrite values when property is initialised but undefined', funct
   const src = { value: undefined }
 
   function hasUndefinedProperty (o) {
-    t.ok(Object.hasOwnProperty.call(o, 'value'))
+    t.ok(Object.prototype.hasOwnProperty.call(o, 'value'))
     t.equal(typeof o.value, 'undefined')
   }
 
