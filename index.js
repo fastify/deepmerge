@@ -64,7 +64,7 @@ function deepmergeConstructor (options) {
     : Object.keys
 
   function isMergeableObject (value) {
-    return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date)
+    return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date) && !(value instanceof Buffer)
   }
 
   function isPrimitive (value) {
@@ -72,7 +72,7 @@ function deepmergeConstructor (options) {
   }
 
   function isPrimitiveOrBuiltIn (value) {
-    return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
+    return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date || value instanceof Buffer
   }
 
   const mergeArray = options && typeof options.mergeArray === 'function'
