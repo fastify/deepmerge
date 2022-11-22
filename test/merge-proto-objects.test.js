@@ -61,9 +61,6 @@ test('should clone the stream by reference', async t => {
 })
 
 test('should clone the buffer by reference', async t => {
-  const stream = fs.createReadStream(__filename)
-  t.teardown(() => stream.destroy())
-
   const result = deepmerge({
     cloneProtoObject (x) {
       t.ok(x instanceof Buffer)
