@@ -115,7 +115,7 @@ console.log(resultDeepmergedArray) // [ { a: [ 1, 2, 3 ], b: [ 4, 5, 6 ] } ]
 
 #### cloneProtoObject
 
-Merging objects with prototypes such Streams or Buffer, it is not supported by default.
+Merging objects with prototypes, such as Streams or Buffers, are not supported by default.
 You can provide a custom function to let this module deal with the object that has a `prototype` _(JSON object excluded)_.
 
 ```js
