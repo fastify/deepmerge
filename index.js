@@ -82,7 +82,12 @@ function deepmergeConstructor (options) {
   }
 
   function isPrimitiveOrBuiltIn (value) {
-    return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date || value instanceof Buffer
+    if (Buffer) {
+      return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date || value instanceof Buffer
+    } else {
+      // browser compatibility
+      return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
+    }
   }
 
   const mergeArray = options && typeof options.mergeArray === 'function'

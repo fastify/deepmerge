@@ -61,9 +61,6 @@ test('should clone the stream by reference', async t => {
 })
 
 test('should clone the buffer by reference', async t => {
-  const stream = fs.createReadStream(__filename)
-  t.teardown(() => stream.destroy())
-
   const result = deepmerge({
     cloneProtoObject (x) {
       t.ok(x instanceof Buffer)
@@ -74,10 +71,19 @@ test('should clone the buffer by reference', async t => {
   t.ok(result.logger.buffer instanceof Buffer)
 })
 
-test('should not merge the buffers when cloned by reference', async t => {
-  const stream = fs.createReadStream(__filename)
-  t.teardown(() => stream.destroy())
+test('should not break in browser context', async t => {
+  const deepmerge = t.mock('../index', {
+    Buffer: null
+  })
+  const result = deepmerge({
+    cloneProtoObject (x) { return x }
+  })(
+    { logger: { foo: 'bar' } },
+    { logger: { bar: 'foo' } })
+  t.same(result.logger, { foo: 'bar', bar: 'foo' })
+})
 
+test('should not merge the buffers when cloned by reference', async t => {
   const result = deepmerge({
     cloneProtoObject (x) {
       t.ok(x instanceof Buffer)
