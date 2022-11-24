@@ -7,7 +7,6 @@
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "cypress:open": "cypress open",
     "test": "npm run test:unit && npm run test:typescript",
     "test:unit": "tap -J test/*.test.js test/**/*.test.js",
     "test:typescript": "tsd"
@@ -23,7 +22,6 @@
   },
   "homepage": "https://github.com/fastify/deepmerge#readme",
   "devDependencies": {
-    "cypress": "^11.1.0",
     "standard": "^17.0.0",
     "tap": "^16.3.0",
     "tsd": "^0.24.1"
