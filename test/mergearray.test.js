@@ -5,16 +5,16 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')
-const test = require('tap').test
+const test = require('tape').test
 
 test('all options are set', function (t) {
   t.plan(4)
 
   function mergeArray (options) {
-    t.type(options.deepmerge, 'function')
-    t.type(options.isMergeableObject, 'function')
-    t.type(options.getKeys, 'function')
-    t.type(options.clone, 'function')
+    t.equal(typeof options.deepmerge, 'function')
+    t.equal(typeof options.isMergeableObject, 'function')
+    t.equal(typeof options.getKeys, 'function')
+    t.equal(typeof options.clone, 'function')
     return (a, b) => []
   }
   const merge = deepmerge({ mergeArray })
@@ -63,7 +63,7 @@ test('custom merge array', function (t) {
   }
 
   t.ok(mergeFunctionCalled)
-  t.strictSame(actual, expected)
+  t.deepEqual(actual, expected)
   t.end()
 })
 
@@ -80,7 +80,7 @@ test('merge top-level arrays', function (t) {
   const expected = [3, 4]
 
   t.ok(b === actual)
-  t.strictSame(actual, expected)
+  t.deepEqual(actual, expected)
 })
 
 test('cloner function is available for merge functions to use', function (t) {
@@ -112,7 +112,7 @@ test('cloner function is available for merge functions to use', function (t) {
     key2: ['four']
   }
 
-  t.strictSame(merge(target, src), expected)
+  t.deepEqual(merge(target, src), expected)
   t.ok(customMergeWasCalled)
   t.ok(Array.isArray(merge(target, src).key1))
   t.ok(Array.isArray(merge(target, src).key2))

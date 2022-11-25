@@ -5,7 +5,7 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')({ symbols: true })
-const test = require('tap').test
+const test = require('tape').test
 
 test('copy symbol keys in target that do not exist on the target', function (t) {
   const mySymbol = Symbol('test')

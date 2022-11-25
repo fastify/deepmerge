@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const { Readable } = require('stream')
 const deepmerge = require('../index')
-const { test } = require('tap')
+const { test } = require('tape')
 
 test('merge nested objects should be immutable', function (t) {
   t.plan(3)
@@ -41,7 +41,7 @@ test('should clone the stream properties', async t => {
   t.teardown(() => stream.destroy())
 
   const result = deepmerge()({ logger: { foo: 'bar' } }, { logger: { stream } })
-  t.type(result.logger.stream, 'object')
+  t.equal(typeof result.logger.stream, 'object')
   t.notOk(result.logger.stream instanceof Readable)
   t.notOk(result.logger.stream.__proto___)
 })
@@ -52,11 +52,11 @@ test('should clone the stream by reference', async t => {
 
   const result = deepmerge({
     cloneProtoObject (x) {
-      t.type(x, Readable)
+      t.ok(x instanceof Readable)
       return x
     }
   })({ logger: { foo: 'bar' } }, { logger: { stream } })
-  t.type(result.logger.stream, 'object')
+  t.equal(typeof result.logger.stream, 'object')
   t.ok(result.logger.stream instanceof Readable)
 })
 
@@ -67,7 +67,7 @@ test('should clone the buffer by reference', async t => {
       return x
     }
   })({ logger: { foo: 'bar' } }, { logger: { buffer: Buffer.of(1, 2, 3) } })
-  t.type(result.logger.buffer, 'object')
+  t.equal(typeof result.logger.buffer, 'object')
   t.ok(result.logger.buffer instanceof Buffer)
 })
 
@@ -81,7 +81,7 @@ test('should not merge the buffers when cloned by reference', async t => {
     { logger: { buffer: Buffer.of(1, 2, 3) } },
     { logger: { buffer: Buffer.of(1, 2, 3) } }
   )
-  t.type(result.logger.buffer, 'object')
+  t.equal(typeof result.logger.buffer, 'object')
   t.ok(result.logger.buffer instanceof Buffer)
   t.same(result.logger.buffer, Buffer.of(1, 2, 3))
 })
