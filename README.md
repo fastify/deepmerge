@@ -24,6 +24,7 @@ deepmerge(options)
 - `symbols` (`boolean`, optional) - should also merge object-keys which are symbols, default is false
 - `all` (`boolean`, optional) - merges all parameters, default is false
 - `mergeArray` (`function`, optional) - provide a function, which returns a function to add custom array merging function
+- `cloneProtoObject` (`function`, optional) - provide a function, which must return a clone of the object with the prototype of the object
 
 ```js
 const deepmerge = require('@fastify/deepmerge')()
@@ -110,6 +111,24 @@ console.log(resultConcatArray) // [ { a: [ 1, 2, 3 ]}, { b: [ 4, 5, 6 ] } ]
 const deepmergeDeepmergeArray = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
 const resultDeepmergedArray = deepmergeDeepmergeArray([{ a: [1, 2, 3 ]}], [{b: [4, 5, 6]}])
 console.log(resultDeepmergedArray) // [ { a: [ 1, 2, 3 ], b: [ 4, 5, 6 ] } ]
+```
+
+#### cloneProtoObject
+
+Merging objects with prototypes, such as Streams or Buffers, are not supported by default.
+You can provide a custom function to let this module deal with the object that has a `prototype` _(JSON object excluded)_.
+
+```js
+function cloneByReference (source) {
+  return source
+}
+
+const deepmergeByReference = require('@fastify/deepmerge')({
+  cloneProtoObject: cloneByReference
+})
+
+const result = deepmergeByReference({}, { stream: process.stdout })
+console.log(result) // { stream: <ref *1> WriteStream }
 ```
 
 ## Benchmarks

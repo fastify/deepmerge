@@ -4,6 +4,8 @@
 // MIT License
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
+const JSON_PROTO = Object.getPrototypeOf({})
+
 function deepmergeConstructor (options) {
   function isNotPrototypeKey (value) {
     return (
@@ -25,6 +27,10 @@ function deepmergeConstructor (options) {
 
   function cloneObject (target) {
     const result = {}
+
+    if (cloneProtoObject && Object.getPrototypeOf(target) !== JSON_PROTO) {
+      return cloneProtoObject(target)
+    }
 
     const targetKeys = getKeys(target)
     let i, il, key
@@ -63,6 +69,10 @@ function deepmergeConstructor (options) {
     ? getSymbolsAndKeys
     : Object.keys
 
+  const cloneProtoObject = typeof options?.cloneProtoObject === 'function'
+    ? options.cloneProtoObject
+    : undefined
+
   function isMergeableObject (value) {
     return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date)
   }
@@ -71,9 +81,10 @@ function deepmergeConstructor (options) {
     return typeof value !== 'object' || value === null
   }
 
-  function isPrimitiveOrBuiltIn (value) {
-    return typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
-  }
+  /* istanbul ignore next */
+  const isPrimitiveOrBuiltIn = typeof Buffer !== 'undefined'
+    ? (value) => typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date || value instanceof Buffer
+    : (value) => typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
 
   const mergeArray = options && typeof options.mergeArray === 'function'
     ? options.mergeArray({ clone, deepmerge: _deepmerge, getKeys, isMergeableObject })
