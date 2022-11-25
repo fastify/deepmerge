@@ -1,5 +1,6 @@
 
 globalThis.t.test('Browser support', t => {
+  // eslint-disable-next-line no-eval
   eval(globalThis.deepMergeFile)
 
   t.plan(1)

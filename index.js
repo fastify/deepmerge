@@ -81,6 +81,7 @@ function deepmergeConstructor (options) {
     return typeof value !== 'object' || value === null
   }
 
+  /* istanbul ignore next */
   const isPrimitiveOrBuiltIn = typeof Buffer !== 'undefined'
     ? (value) => typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date || value instanceof Buffer
     : (value) => typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
