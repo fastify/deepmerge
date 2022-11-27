@@ -5,7 +5,7 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')({ all: true })
-const test = require('tap').test
+const test = require('tape').test
 
 test('return an empty object if first argument is an array with no elements', function (t) {
   t.same(deepmerge(), {})
