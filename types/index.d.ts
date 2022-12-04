@@ -1,6 +1,3 @@
-declare function deepmerge(options: Options & { all: true }): DeepMergeAllFn;
-declare function deepmerge(options?: Options): DeepMergeFn;
-
 type DeepMergeFn = <T1, T2>(target: T1, source: T2) => DeepMerge<T1, T2>;
 type DeepMergeAllFn = <T extends Array<any>>(...targets: T) => DeepMergeAll<{}, T>;
 
@@ -69,8 +66,15 @@ interface Options {
   all?: boolean;
 }
 
-export default deepmerge
-export {
-  deepmerge,
-  Options
+type DeepmergeConstructor = typeof deepmerge
+
+declare namespace deepmerge {
+  export { Options }
+  export const deepmerge: DeepmergeConstructor
+  export { deepmerge as default }
 }
+
+declare function deepmerge(options: Options & { all: true }): DeepMergeAllFn;
+declare function deepmerge(options?: Options): DeepMergeFn;
+
+export = deepmerge
