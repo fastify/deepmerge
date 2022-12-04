@@ -1,3 +1,6 @@
 ts: false
 jsx: false
 coverage: true
+
+files:
+  - test/**/*.test.js
