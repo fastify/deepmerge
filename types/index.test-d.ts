@@ -34,6 +34,8 @@ expectType<{ a: { a: string, b: string } }>(deepmerge()({ a: { a: { a: 'string' 
 expectType<string>(deepmerge()({ a: [1,2,3,4] }, { a: 'string' }).a)
 expectType<number[]>(deepmerge()({ a: [1,2,3,4] }, { a: [1,2,3,4] }).a)
 expectType<(number|string)[]>(deepmerge()({ a: [1,2,3,4] }, { a: ['a'] }).a)
+expectType<(number|string)[]>(deepmerge()({ a: [1,2,3,4] as readonly number[] }, { a: ['a'] }).a)
+expectType<[1,2,3,4,'a']>(deepmerge()({ a: [1,2,3,4] as const }, { a: ['a'] as const }).a)
 expectType<Array<number>>(deepmerge()({ a: [1] }, { a: [2] }).a)
 expectType<{b: number[]}>(deepmerge()({ a: {b: {}} }, { a: {b: [2]} }).a)
 expectType<{b: Date}>(deepmerge()({ a: {b: {}} }, { a: {b: new Date()} }).a)
