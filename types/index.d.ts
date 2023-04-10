@@ -12,11 +12,11 @@ type Primitive =
 
 type BuiltIns = Primitive | Date | RegExp;
 
-type MergeTypes<T, U> = T extends Array<infer A1>
-  ? U extends Array<infer A2>
-  ? Array<A1 | A2>
-  : T
-  : U
+type MergeArrays<T, U> = T extends readonly any[]
+  ? U extends readonly any[]
+  ? [...T, ...U]
+  : never
+  : never
 
 type DifferenceKeys<
   T,
@@ -38,8 +38,8 @@ type DeepMergeHelper<
 type DeepMerge<T, U> =
   U extends BuiltIns
   ? U
-  : [T, U] extends [any[], any[]]
-  ? MergeTypes<T, U>
+  : [T, U] extends [readonly any[], readonly any[]]
+  ? MergeArrays<T, U>
   : [T, U] extends [{ [key: string]: unknown }, { [key: string]: unknown }]
   ? DeepMergeHelper<T, U>
   : U
