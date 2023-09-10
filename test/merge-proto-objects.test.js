@@ -1,8 +1,8 @@
 'use strict'
 
-const fs = require('fs')
+const fs = require('node:fs')
 
-const { Readable } = require('stream')
+const { Readable } = require('node:stream')
 const deepmerge = require('../index')
 const { test } = require('tape')
 
