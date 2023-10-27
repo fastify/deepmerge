@@ -3,6 +3,7 @@
   "version": "1.3.0",
   "description": "Merges the enumerable properties of two or more objects deeply.",
   "main": "index.js",
+  "type": "commonjs",
   "types": "types/index.d.ts",
   "scripts": {
     "lint": "standard",
