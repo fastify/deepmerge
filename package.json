@@ -23,10 +23,10 @@
   },
   "homepage": "https://github.com/fastify/deepmerge#readme",
   "devDependencies": {
-    "standard": "^17.0.0",
-    "tap": "^16.3.0",
-    "tape": "^5.6.1",
-    "tsd": "^0.27.0"
+    "standard": "^17.1.0",
+    "tap": "^18.7.1",
+    "tape": "^5.7.5",
+    "tsd": "^0.30.7"
   },
   "files": [
     "LICENSE",
