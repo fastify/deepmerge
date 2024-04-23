@@ -61,7 +61,7 @@ deepmerge: DeepMergeFn;
 getKeys: (value: object) => string[];
 ```
 
-The `mergeAray`-Function needs to return the actual Array merging function, which accepts two parameters of type 
+The `mergeArray`-Function needs to return the actual Array merging function, which accepts two parameters of type 
 Array, and returns a value.
 
 Example 1: Replace the target-Array with a clone of the source-Array.
