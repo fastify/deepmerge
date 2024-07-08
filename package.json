@@ -24,7 +24,7 @@
   "homepage": "https://github.com/fastify/deepmerge#readme",
   "devDependencies": {
     "standard": "^17.1.0",
-    "tap": "^18.7.1",
+    "tap": "^20.0.3",
     "tape": "^5.7.5",
     "tsd": "^0.31.1"
   },
