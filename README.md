@@ -13,7 +13,7 @@ npm i @fastify/deepmerge
 
 ### Usage
 
-The module exports a function, which provides a function to deepmerge Objects. 
+The module exports a function, which provides a function to deepmerge Objects.
 
 ```
 deepmerge(options)
@@ -61,7 +61,7 @@ deepmerge: DeepMergeFn;
 getKeys: (value: object) => string[];
 ```
 
-The `mergeArray`-Function needs to return the actual Array merging function, which accepts two parameters of type 
+The `mergeArray`-Function needs to return the actual Array merging function, which accepts two parameters of type
 Array, and returns a value.
 
 Example 1: Replace the target-Array with a clone of the source-Array.
@@ -133,7 +133,7 @@ console.log(result) // { stream: <ref *1> WriteStream }
 
 ## Benchmarks
 
-The benchmarks are available in the benchmark-folder. 
+The benchmarks are available in the benchmark-folder.
 
 `npm run bench` - benchmark various use cases of deepmerge:
 ```
