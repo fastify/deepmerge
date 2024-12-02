@@ -111,7 +111,7 @@ function deepmergeConstructor (options) {
     for (i = 0, il = sourceKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = sourceKeys[i]) &&
       (
-        key in target && (targetKeys.indexOf(key) !== -1 && 
+        key in target && (targetKeys.indexOf(key) !== -1 && // eslint-disable-line no-mixed-operators
           ((isMergeableObject(key) && cloneProtoObject && Object.getPrototypeOf(source[key]) !== JSON_PROTO && (result[key] = cloneProtoObject(source[key]))) ||
           (result[key] = _deepmerge(target[key], source[key]))), true) || // eslint-disable-line no-mixed-operators
         (result[key] = clone(source[key]))
