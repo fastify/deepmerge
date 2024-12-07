@@ -7,8 +7,8 @@ const deepmerge = require('../index')
 const { test } = require('tape')
 
 class Foo {
-  constructor(foo) {
-    this.foo = foo;
+  constructor (foo) {
+    this.foo = foo
   }
 }
 
@@ -94,7 +94,7 @@ test('should not merge the buffers when cloned by reference', async t => {
 
 test('should clone by refernce with proto object in both source and target', async t => {
   t.plan(4)
-  const foo2 = new Foo(2) 
+  const foo2 = new Foo(2)
   const result = deepmerge({
     cloneProtoObject (x) {
       t.ok(x instanceof Foo)
