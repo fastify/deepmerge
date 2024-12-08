@@ -6,6 +6,12 @@ const { Readable } = require('node:stream')
 const deepmerge = require('../index')
 const { test } = require('tape')
 
+class Foo {
+  constructor (foo) {
+    this.foo = foo
+  }
+}
+
 test('merge nested objects should be immutable', function (t) {
   t.plan(3)
   const src = {
@@ -84,6 +90,23 @@ test('should not merge the buffers when cloned by reference', async t => {
   t.equal(typeof result.logger.buffer, 'object')
   t.ok(result.logger.buffer instanceof Buffer)
   t.same(result.logger.buffer, Buffer.of(1, 2, 3))
+})
+
+test('should clone by reference with proto object in both source and target', async t => {
+  t.plan(4)
+  const foo2 = new Foo(2)
+  const result = deepmerge({
+    cloneProtoObject (x) {
+      t.ok(x instanceof Foo)
+      return x
+    }
+  })(
+    { foo: new Foo(1) },
+    { foo: foo2 }
+  )
+  t.equal(typeof result.foo, 'object')
+  t.ok(result.foo instanceof Foo)
+  t.same(result.foo, foo2)
 })
 
 test('doc example', async t => {
