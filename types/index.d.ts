@@ -44,7 +44,10 @@ type DeepMerge<T, U> =
             ? DeepMergeHelper<T, U>
             : U
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type First<T> = T extends [infer _I, ...infer _Rest] ? _I : never
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Rest<T> = T extends [infer _I, ...infer _Rest] ? _Rest : never
 
 type DeepMergeAll<R, T> = First<T> extends never
