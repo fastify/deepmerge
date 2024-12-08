@@ -92,7 +92,7 @@ test('should not merge the buffers when cloned by reference', async t => {
   t.same(result.logger.buffer, Buffer.of(1, 2, 3))
 })
 
-test('should clone by refernce with proto object in both source and target', async t => {
+test('should clone by reference with proto object in both source and target', async t => {
   t.plan(4)
   const foo2 = new Foo(2)
   const result = deepmerge({
