@@ -1,5 +1,5 @@
-type DeepMergeFn = <T1, T2>(target: T1, source: T2) => DeepMerge<T1, T2>;
-type DeepMergeAllFn = <T extends Array<any>>(...targets: T) => DeepMergeAll<{}, T>;
+type DeepMergeFn = <T1, T2>(target: T1, source: T2) => DeepMerge<T1, T2>
+type DeepMergeAllFn = <T extends Array<any>>(...targets: T) => DeepMergeAll<{}, T>
 
 type Primitive =
   | null
@@ -8,14 +8,14 @@ type Primitive =
   | number
   | boolean
   | symbol
-  | bigint;
+  | bigint
 
-type BuiltIns = Primitive | Date | RegExp;
+type BuiltIns = Primitive | Date | RegExp
 
 type MergeArrays<T, U> = T extends readonly any[]
   ? U extends readonly any[]
-  ? [...T, ...U]
-  : never
+    ? [...T, ...U]
+    : never
   : never
 
 type DifferenceKeys<
@@ -37,19 +37,19 @@ type DeepMergeHelper<
 
 type DeepMerge<T, U> =
   U extends BuiltIns
-  ? U
-  : [T, U] extends [readonly any[], readonly any[]]
-  ? MergeArrays<T, U>
-  : [T, U] extends [{ [key: string]: unknown }, { [key: string]: unknown }]
-  ? DeepMergeHelper<T, U>
-  : U
+    ? U
+    : [T, U] extends [readonly any[], readonly any[]]
+        ? MergeArrays<T, U>
+        : [T, U] extends [{ [key: string]: unknown }, { [key: string]: unknown }]
+            ? DeepMergeHelper<T, U>
+            : U
 
-type First<T> = T extends [infer _I, ...infer _Rest] ? _I : never;
+type First<T> = T extends [infer _I, ...infer _Rest] ? _I : never
 type Rest<T> = T extends [infer _I, ...infer _Rest] ? _Rest : never
 
 type DeepMergeAll<R, T> = First<T> extends never
   ? R
-  : DeepMergeAll<DeepMerge<R, First<T>>, Rest<T>>;
+  : DeepMergeAll<DeepMerge<R, First<T>>, Rest<T>>
 
 type MergeArrayFnOptions = {
   clone: (value: any) => any;
@@ -74,7 +74,7 @@ declare namespace deepmerge {
   export { deepmerge as default }
 }
 
-declare function deepmerge(options: Options & { all: true }): DeepMergeAllFn;
-declare function deepmerge(options?: Options): DeepMergeFn;
+declare function deepmerge (options: Options & { all: true }): DeepMergeAllFn
+declare function deepmerge (options?: Options): DeepMergeFn
 
 export = deepmerge
