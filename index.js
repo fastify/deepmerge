@@ -122,7 +122,7 @@ function deepmergeConstructor (options) {
           }
         }
       } else {
-        result[key] = clone(source[key]);
+        result[key] = clone(source[key])
       }
     }
     return result
