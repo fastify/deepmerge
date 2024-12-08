@@ -111,7 +111,7 @@ function deepmergeConstructor (options) {
     for (i = 0, il = sourceKeys.length; i < il; ++i) {
       isNotPrototypeKey(key = sourceKeys[i]) &&
       (
-        key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true) || // eslint-disable-line no-mixed-operators
+        (key in target && (targetKeys.indexOf(key) !== -1 && (result[key] = _deepmerge(target[key], source[key])), true)) ||
         (result[key] = clone(source[key]))
       )
     }
