@@ -22,7 +22,7 @@ deepmerge(options)
 `options` is optional and can contain following values
 
 - `symbols` (`boolean`, optional) - should also merge object-keys which are symbols, default is false
-- `all` (`boolean`, optional) - makes deepmerge return a function that accepts and merges any number of passed objects, default is false
+- `all` (`boolean`, optional) - makes deepmerge accept and merge any number of passed objects, default is false
 - `mergeArray` (`function`, optional) - provide a function, which returns a function to add custom array merging function
 - `cloneProtoObject` (`function`, optional) - provide a function, which must return a clone of the object with the prototype of the object
 
