@@ -22,7 +22,7 @@ deepmerge(options)
 `options` is optional and can contain following values
 
 - `symbols` (`boolean`, optional) - should also merge object-keys which are symbols, default is false
-- `all` (`boolean`, optional) - merges all parameters, default is false
+- `all` (`boolean`, optional) - makes deepmerge accept and merge any number of passed objects, default is false
 - `mergeArray` (`function`, optional) - provide a function, which returns a function to add custom array merging function
 - `cloneProtoObject` (`function`, optional) - provide a function, which must return a clone of the object with the prototype of the object
 
@@ -137,7 +137,7 @@ The benchmarks are available in the benchmark-folder.
 
 `npm run bench` - benchmark various use cases of deepmerge:
 ```
-@@fastify/deepmerge: merge regex with date x 1,256,523,040 ops/sec ±0.16% (92 runs sampled)
+@fastify/deepmerge: merge regex with date x 1,256,523,040 ops/sec ±0.16% (92 runs sampled)
 @fastify/deepmerge: merge object with a primitive x 1,256,082,915 ops/sec ±0.25% (97 runs sampled)
 @fastify/deepmerge: merge two arrays containing strings x 25,392,605 ops/sec ±0.22% (97 runs sampled)
 @fastify/deepmerge: two merge arrays containing objects x 1,655,426 ops/sec ±0.65% (96 runs sampled)
