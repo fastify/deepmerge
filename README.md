@@ -50,7 +50,7 @@ const result = deepmerge(target, source)
 console.log(result) // [1, 2, 3, 4, 5, 6]
 ```
 
-To overwrite the default behaviour regarding merging Arrays, you can provide a function to the
+To overwrite the default behavior regarding merging Arrays, you can provide a function to the
 `mergeArray` option of the deepmerge-function. The function provided to `mergeArray`
 gets an options-parameter passed, which is an Object containing the following keys and values.
 
@@ -102,12 +102,12 @@ function deepmergeArray(options) {
   }
 }
 
-// default behaviour
+// default behavior
 const deepmergeConcatArray = require('@fastify/deepmerge')()
 const resultConcatArray = deepmergeConcatArray([{ a: [1, 2, 3 ]}], [{b: [4, 5, 6]}])
 console.log(resultConcatArray) // [ { a: [ 1, 2, 3 ]}, { b: [ 4, 5, 6 ] } ]
 
-// modified behaviour
+// modified behavior
 const deepmergeDeepmergeArray = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
 const resultDeepmergedArray = deepmergeDeepmergeArray([{ a: [1, 2, 3 ]}], [{b: [4, 5, 6]}])
 console.log(resultDeepmergedArray) // [ { a: [ 1, 2, 3 ], b: [ 4, 5, 6 ] } ]
