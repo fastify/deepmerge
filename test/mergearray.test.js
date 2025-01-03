@@ -15,7 +15,7 @@ test('all options are set', function (t) {
     t.equal(typeof options.isMergeableObject, 'function')
     t.equal(typeof options.getKeys, 'function')
     t.equal(typeof options.clone, 'function')
-    return (a, b) => []
+    return (_a, _b) => []
   }
   const merge = deepmerge({ mergeArray })
   merge([], [])
@@ -26,10 +26,10 @@ test('cloning works properly', function (t) {
 
   function cloneMerge (options) {
     const clone = options.clone
-    return (a, b) => clone(b)
+    return (_a, b) => clone(b)
   }
   function referenceMerge () {
-    return (a, b) => b
+    return (_a, b) => b
   }
   const a = [1, 2]
   const b = [3, 4]
@@ -42,7 +42,7 @@ test('cloning works properly', function (t) {
 test('custom merge array', function (t) {
   let mergeFunctionCalled = false
   function overwriteMerge () {
-    return function (target, source) {
+    return function (_target, source) {
       mergeFunctionCalled = true
       return source
     }
@@ -72,7 +72,7 @@ test('merge top-level arrays', function (t) {
   const merge = deepmerge({ mergeArray: overwriteMerge })
 
   function overwriteMerge () {
-    return (a, b) => b
+    return (_a, b) => b
   }
   const a = [1, 2]
   const b = [3, 4]
