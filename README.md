@@ -19,9 +19,9 @@ The module exports a function, which provides a function to deepmerge Objects.
 deepmerge(options)
 ```
 
-`options` is optional and can contain following values
+`options` is optional and can contain the following values:
 
-- `symbols` (`boolean`, optional) - should also merge object-keys which are symbols, default is false
+- `symbols` (`boolean`, optional) - should also merge object keys that are symbols, default is false
 - `all` (`boolean`, optional) - makes deepmerge accept and merge any number of passed objects, default is false
 - `mergeArray` (`function`, optional) - provide a function, which returns a function to add custom array merging function
 - `cloneProtoObject` (`function`, optional) - provide a function, which must return a clone of the object with the prototype of the object
@@ -133,7 +133,7 @@ console.log(result) // { stream: <ref *1> WriteStream }
 
 ## Benchmarks
 
-The benchmarks are available in the benchmark-folder.
+The benchmarks are available in the benchmark folder.
 
 `npm run bench` - benchmark various use cases of deepmerge:
 ```
