@@ -65,7 +65,7 @@ function deepmergeConstructor (options) {
     return result
   }
 
-  const getKeys = options && options.symbols
+  const getKeys = options?.symbols
     ? getSymbolsAndKeys
     : Object.keys
 
@@ -161,7 +161,7 @@ function deepmergeConstructor (options) {
     return result
   }
 
-  return options && options.all
+  return options?.all
     ? _deepmergeAll
     : _deepmerge
 }
