@@ -65,7 +65,7 @@ deepmerge({
 })
 deepmerge({
   mergeArray: function () {
-    return function (target, source) {
+    return function (_target, source) {
       return source
     }
   }
