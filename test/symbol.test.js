@@ -5,7 +5,7 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')({ symbols: true })
-const {test} = require('node:test')
+const { test } = require('node:test')
 
 test('copy symbol keys in target that do not exist on the target', function (t) {
   const mySymbol = Symbol('test')
@@ -16,7 +16,6 @@ test('copy symbol keys in target that do not exist on the target', function (t) 
 
   t.assert.deepStrictEqual(res[mySymbol], 'value1')
   t.assert.deepStrictEqual(Object.getOwnPropertySymbols(res), Object.getOwnPropertySymbols(src))
-
 })
 
 test('copy symbol keys in target that do exist on the target', function (t) {
@@ -27,7 +26,6 @@ test('copy symbol keys in target that do exist on the target', function (t) {
   const res = deepmerge(target, src)
 
   t.assert.deepStrictEqual(res[mySymbol], 'value1')
-
 })
 
 test('does not copy enumerable symbol keys in source', function (t) {
@@ -44,5 +42,4 @@ test('does not copy enumerable symbol keys in source', function (t) {
   const res = deepmerge(target, src)
 
   t.assert.deepStrictEqual(res[mySymbol], 'wat')
-
 })

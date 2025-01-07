@@ -5,7 +5,7 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')
-const {test} = require('node:test')
+const { test } = require('node:test')
 
 test('all options are set', function (t) {
   t.plan(4)
@@ -64,7 +64,6 @@ test('custom merge array', function (t) {
 
   t.assert.ok(mergeFunctionCalled)
   t.assert.deepStrictEqual(actual, expected)
-
 })
 
 test('merge top-level arrays', function (t) {
