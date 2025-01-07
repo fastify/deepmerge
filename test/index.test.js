@@ -5,7 +5,7 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')({ symbols: true })
-const test = require('tape').test
+const { test } = require('node:test')
 
 test('add keys in target that do not exist at the root', function (t) {
   const src = { key1: 'value1', key2: 'value2' }
@@ -13,9 +13,8 @@ test('add keys in target that do not exist at the root', function (t) {
 
   const res = deepmerge(target, src)
 
-  t.same(target, {}, 'merge should be immutable')
-  t.same(res, src)
-  t.end()
+  t.assert.deepStrictEqual(target, {}, 'merge should be immutable')
+  t.assert.deepStrictEqual(res, src)
 })
 
 test('merge existing simple keys in target at the roots', function (t) {
@@ -28,9 +27,8 @@ test('merge existing simple keys in target at the roots', function (t) {
     key3: 'value3'
   }
 
-  t.same(target, { key1: 'value1', key3: 'value3' })
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(target, { key1: 'value1', key3: 'value3' })
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('merge nested objects into target', function (t) {
@@ -55,14 +53,13 @@ test('merge nested objects into target', function (t) {
     }
   }
 
-  t.same(target, {
+  t.assert.deepStrictEqual(target, {
     key1: {
       subkey1: 'value1',
       subkey2: 'value2'
     }
   })
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('replace simple key with nested object in target', function (t) {
@@ -85,9 +82,8 @@ test('replace simple key with nested object in target', function (t) {
     key2: 'value2'
   }
 
-  t.same(target, { key1: 'value1', key2: 'value2' })
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(target, { key1: 'value1', key2: 'value2' })
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should add nested object in target', function (t) {
@@ -108,8 +104,7 @@ test('should add nested object in target', function (t) {
     }
   }
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should clone source and target', function (t) {
@@ -136,12 +131,10 @@ test('should clone source and target', function (t) {
 
   const merged = deepmerge(target, src)
 
-  t.same(merged, expected)
+  t.assert.deepStrictEqual(merged, expected)
 
-  t.not(merged.a, target.a)
-  t.not(merged.b, src.b)
-
-  t.end()
+  t.assert.notStrictEqual(merged.a, target.a)
+  t.assert.notStrictEqual(merged.b, src.b)
 })
 
 test('should clone source and target', function (t) {
@@ -158,10 +151,8 @@ test('should clone source and target', function (t) {
   }
 
   const merged = deepmerge(target, src)
-  t.not(merged.a, target.a)
-  t.not(merged.b, src.b)
-
-  t.end()
+  t.assert.notStrictEqual(merged.a, target.a)
+  t.assert.notStrictEqual(merged.b, src.b)
 })
 
 test('should replace object with simple key in target', function (t) {
@@ -176,15 +167,14 @@ test('should replace object with simple key in target', function (t) {
 
   const expected = { key1: 'value1', key2: 'value2' }
 
-  t.same(target, {
+  t.assert.deepStrictEqual(target, {
     key1: {
       subkey1: 'subvalue1',
       subkey2: 'subvalue2'
     },
     key2: 'value2'
   })
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should replace objects with arrays', function (t) {
@@ -194,8 +184,7 @@ test('should replace objects with arrays', function (t) {
 
   const expected = { key1: ['subkey'] }
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should replace arrays with objects', function (t) {
@@ -205,8 +194,7 @@ test('should replace arrays with objects', function (t) {
 
   const expected = { key1: { subkey: 'one' } }
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should replace object with primitive', function (t) {
@@ -216,8 +204,7 @@ test('should replace object with primitive', function (t) {
 
   const expected = 'test'
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should replace Date with RegExp', function (t) {
@@ -227,8 +214,7 @@ test('should replace Date with RegExp', function (t) {
 
   const expected = /a/g
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should replace dates with arrays', function (t) {
@@ -238,8 +224,7 @@ test('should replace dates with arrays', function (t) {
 
   const expected = { key1: ['subkey'] }
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should replace null with arrays', function (t) {
@@ -255,8 +240,7 @@ test('should replace null with arrays', function (t) {
     key1: ['subkey']
   }
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should work on simple array', function (t) {
@@ -265,9 +249,8 @@ test('should work on simple array', function (t) {
 
   const expected = ['one', 'two', 'one', 'three']
 
-  t.same(deepmerge(target, src), expected)
-  t.ok(Array.isArray(deepmerge(target, src)))
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
+  t.assert.ok(Array.isArray(deepmerge(target, src)))
 })
 
 test('should work on another simple array', function (t) {
@@ -275,10 +258,9 @@ test('should work on another simple array', function (t) {
   const src = ['t1', 's1', 'c2', 'r1', 'p2', 'p3']
 
   const expected = ['a1', 'a2', 'c1', 'f1', 'p1', 't1', 's1', 'c2', 'r1', 'p2', 'p3']
-  t.same(target, ['a1', 'a2', 'c1', 'f1', 'p1'])
-  t.same(deepmerge(target, src), expected)
-  t.ok(Array.isArray(deepmerge(target, src)))
-  t.end()
+  t.assert.deepStrictEqual(target, ['a1', 'a2', 'c1', 'f1', 'p1'])
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
+  t.assert.ok(Array.isArray(deepmerge(target, src)))
 })
 
 test('should work on array properties', function (t) {
@@ -295,10 +277,9 @@ test('should work on array properties', function (t) {
     key2: ['four']
   }
 
-  t.same(deepmerge(target, src), expected)
-  t.ok(Array.isArray(deepmerge(target, src).key1))
-  t.ok(Array.isArray(deepmerge(target, src).key2))
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
+  t.assert.ok(Array.isArray(deepmerge(target, src).key1))
+  t.assert.ok(Array.isArray(deepmerge(target, src).key2))
 })
 
 test('should work on array properties with clone option', function (t) {
@@ -310,14 +291,13 @@ test('should work on array properties with clone option', function (t) {
     key1: ['one', 'two']
   }
 
-  t.same(target, {
+  t.assert.deepStrictEqual(target, {
     key1: ['one', 'two']
   })
   const merged = deepmerge(target, src)
-  t.not(merged.key1, src.key1)
-  t.not(merged.key1, target.key1)
-  t.not(merged.key2, src.key2)
-  t.end()
+  t.assert.notStrictEqual(merged.key1, src.key1)
+  t.assert.notStrictEqual(merged.key1, target.key1)
+  t.assert.notStrictEqual(merged.key2, src.key2)
 })
 
 test('should work on array of objects', function (t) {
@@ -337,11 +317,9 @@ test('should work on array of objects', function (t) {
     { key3: ['five'] }
   ]
 
-  t.same(deepmerge(target, src), expected)
-  t.ok(Array.isArray(deepmerge(target, src)), 'result should be an array')
-  t.ok(Array.isArray(deepmerge(target, src)[0].key1), 'subkey should be an array too')
-
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
+  t.assert.ok(Array.isArray(deepmerge(target, src)), 'result should be an array')
+  t.assert.ok(Array.isArray(deepmerge(target, src)[0].key1), 'subkey should be an array too')
 })
 
 test('should work on array of objects with clone option', function (t) {
@@ -362,15 +340,14 @@ test('should work on array of objects with clone option', function (t) {
   ]
 
   const merged = deepmerge(target, src)
-  t.same(merged, expected)
-  t.ok(Array.isArray(deepmerge(target, src)), 'result should be an array')
-  t.ok(Array.isArray(deepmerge(target, src)[0].key1), 'subkey should be an array too')
-  t.not(merged[0].key1, src[0].key1)
-  t.not(merged[0].key1, target[0].key1)
-  t.not(merged[0].key2, src[0].key2)
-  t.not(merged[1].key3, src[1].key3)
-  t.not(merged[1].key3, target[1].key3)
-  t.end()
+  t.assert.deepStrictEqual(merged, expected)
+  t.assert.ok(Array.isArray(deepmerge(target, src)), 'result should be an array')
+  t.assert.ok(Array.isArray(deepmerge(target, src)[0].key1), 'subkey should be an array too')
+  t.assert.notStrictEqual(merged[0].key1, src[0].key1)
+  t.assert.notStrictEqual(merged[0].key1, target[0].key1)
+  t.assert.notStrictEqual(merged[0].key2, src[0].key2)
+  t.assert.notStrictEqual(merged[1].key3, src[1].key3)
+  t.assert.notStrictEqual(merged[1].key3, target[1].key3)
 })
 
 test('should treat regular expressions like primitive values', function (t) {
@@ -378,9 +355,8 @@ test('should treat regular expressions like primitive values', function (t) {
   const src = { key1: /efg/ }
   const expected = { key1: /efg/ }
 
-  t.same(deepmerge(target, src), expected)
-  t.same(deepmerge(target, src).key1.test('efg'), true)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
+  t.assert.deepStrictEqual(deepmerge(target, src).key1.test('efg'), true)
 })
 
 test('should treat regular expressions like primitive values and should not' +
@@ -390,8 +366,7 @@ test('should treat regular expressions like primitive values and should not' +
 
   const output = deepmerge(target, src)
 
-  t.equal(output.key1, src.key1)
-  t.end()
+  t.assert.deepStrictEqual(output.key1, src.key1)
 }
 )
 
@@ -411,9 +386,8 @@ test('should treat dates like primitives', function (t) {
   }
   const actual = deepmerge(target, source)
 
-  t.same(actual, expected)
-  t.equal(actual.key.valueOf(), tuesday.valueOf())
-  t.end()
+  t.assert.deepStrictEqual(actual, expected)
+  t.assert.deepStrictEqual(actual.key.valueOf(), tuesday.valueOf())
 })
 
 test('should treat dates like primitives and should not clone even with clone' +
@@ -430,8 +404,7 @@ test('should treat dates like primitives and should not clone even with clone' +
 
   const actual = deepmerge(target, source)
 
-  t.equal(actual.key, tuesday)
-  t.end()
+  t.assert.deepStrictEqual(actual.key, tuesday)
 })
 
 test('should work on array with null in it', function (t) {
@@ -441,8 +414,7 @@ test('should work on array with null in it', function (t) {
 
   const expected = [null]
 
-  t.same(deepmerge(target, src), expected)
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(target, src), expected)
 })
 
 test('should clone array\'s element if it is object', function (t) {
@@ -452,9 +424,8 @@ test('should clone array\'s element if it is object', function (t) {
 
   const output = deepmerge(target, source)
 
-  t.not(output[0], a)
-  t.equal(output[0].key, 'yup')
-  t.end()
+  t.assert.notStrictEqual(output[0], a)
+  t.assert.deepStrictEqual(output[0].key, 'yup')
 })
 
 test('should clone an array property when there is no target array', function (t) {
@@ -463,9 +434,8 @@ test('should clone an array property when there is no target array', function (t
   const source = { ary: [someObject] }
   const output = deepmerge(target, source)
 
-  t.same(output, { ary: [{}] })
-  t.not(output.ary[0], someObject)
-  t.end()
+  t.assert.deepStrictEqual(output, { ary: [{}] })
+  t.assert.notStrictEqual(output.ary[0], someObject)
 })
 
 test('should overwrite values when property is initialised but undefined', function (t) {
@@ -476,23 +446,20 @@ test('should overwrite values when property is initialised but undefined', funct
   const src = { value: undefined }
 
   function hasUndefinedProperty (o) {
-    t.ok(Object.hasOwn(o, 'value'))
-    t.equal(typeof o.value, 'undefined')
+    t.assert.ok(Object.hasOwn(o, 'value'))
+    t.assert.deepStrictEqual(typeof o.value, 'undefined')
   }
 
   hasUndefinedProperty(deepmerge(target1, src))
   hasUndefinedProperty(deepmerge(target2, src))
   hasUndefinedProperty(deepmerge(target3, src))
-
-  t.end()
 })
 
 test('should overwrite null with the source', function (t) {
   const expected = { a: 'string' }
   const actual = deepmerge(null, { a: 'string' })
 
-  t.same(actual, expected)
-  t.end()
+  t.assert.deepStrictEqual(actual, expected)
 })
 
 test('dates should copy correctly in an array', function (t) {
@@ -505,42 +472,37 @@ test('dates should copy correctly in an array', function (t) {
   const expected = [monday, 'dude', tuesday, 'lol']
   const actual = deepmerge(target, source)
 
-  t.same(actual, expected)
-  t.end()
+  t.assert.deepStrictEqual(actual, expected)
 })
 
 test('merging objects with own __proto__ in target', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "__proto__": { "admin": true } }')
   const mergedObject = deepmerge(malicious, user)
-  t.notOk(mergedObject.__proto__.admin, 'non-plain properties should not be merged') // eslint-disable-line no-proto
-  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
-  t.end()
+  t.assert.ok(!mergedObject.__proto__.admin, 'non-plain properties should not be merged') // eslint-disable-line no-proto
+  t.assert.ok(!mergedObject.admin, 'the destination should have an unmodified prototype')
 })
 
 test('merging objects with own prototype in target', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "prototype": { "admin": true } }')
   const mergedObject = deepmerge(malicious, user)
-  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
-  t.end()
+  t.assert.ok(!mergedObject.admin, 'the destination should have an unmodified prototype')
 })
 
 test('merging objects with own __proto__ in source', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "__proto__": { "admin": true } }')
   const mergedObject = deepmerge(user, malicious)
-  t.notOk(mergedObject.__proto__.admin, 'non-plain properties should not be merged') // eslint-disable-line no-proto
-  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
-  t.end()
+  t.assert.ok(!mergedObject.__proto__.admin, 'non-plain properties should not be merged') // eslint-disable-line no-proto
+  t.assert.ok(!mergedObject.admin, 'the destination should have an unmodified prototype')
 })
 
 test('merging objects with own prototype in source', function (t) {
   const user = {}
   const malicious = JSON.parse('{ "prototype": { "admin": true } }')
   const mergedObject = deepmerge(user, malicious)
-  t.notOk(mergedObject.admin, 'the destination should have an unmodified prototype')
-  t.end()
+  t.assert.ok(!mergedObject.admin, 'the destination should have an unmodified prototype')
 })
 
 test('merging objects with plain and non-plain properties in target', function (t) {
@@ -558,10 +520,9 @@ test('merging objects with plain and non-plain properties in target', function (
   }
 
   const mergedObject = deepmerge(target, source)
-  t.equal(undefined, mergedObject.parentKey, 'inherited properties of target should be removed, not merged or ignored')
-  t.equal('bar', mergedObject.plainKey, 'enumerable own properties of target should be merged')
-  t.equal('baz', mergedObject.newKey, 'properties not yet on target should be merged')
-  t.end()
+  t.assert.deepStrictEqual(undefined, mergedObject.parentKey, 'inherited properties of target should be removed, not merged or ignored')
+  t.assert.deepStrictEqual('bar', mergedObject.plainKey, 'enumerable own properties of target should be merged')
+  t.assert.deepStrictEqual('baz', mergedObject.newKey, 'properties not yet on target should be merged')
 })
 
 test('merging objects with plain and non-plain properties in source', function (t) {
@@ -579,10 +540,9 @@ test('merging objects with plain and non-plain properties in source', function (
   }
 
   const mergedObject = deepmerge(target, source)
-  t.equal('foo', mergedObject.parentKey, 'inherited properties of source should not be merged')
-  t.equal('bar', mergedObject.plainKey, 'enumerable own properties of source should be merged')
-  t.equal('baz', mergedObject.newKey, 'properties set on target should not be modified')
-  t.end()
+  t.assert.deepStrictEqual('foo', mergedObject.parentKey, 'inherited properties of source should not be merged')
+  t.assert.deepStrictEqual('bar', mergedObject.plainKey, 'enumerable own properties of source should be merged')
+  t.assert.deepStrictEqual('baz', mergedObject.newKey, 'properties set on target should not be modified')
 })
 
 test('merging objects with null prototype', function (t) {
@@ -600,6 +560,5 @@ test('merging objects with null prototype', function (t) {
     }
   }
 
-  t.same(expected, deepmerge(target, source))
-  t.end()
+  t.assert.deepStrictEqual(expected, deepmerge(target, source))
 })

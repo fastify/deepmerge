@@ -1,12 +1,12 @@
 'use strict'
 
-const { test } = require('tape')
+const { test } = require('node:test')
 
 const deepmerge = require('../index')
 
 test('Should not break in browser context', async t => {
   const originalBuffer = Buffer
-  t.teardown(() => {
+  t.after(() => {
     globalThis.Buffer = originalBuffer
   })
 
@@ -17,5 +17,5 @@ test('Should not break in browser context', async t => {
   })(
     { logger: { foo: 'bar' } },
     { logger: { bar: 'foo' } })
-  t.same(result.logger, { foo: 'bar', bar: 'foo' }, 'simple execution')
+  t.assert.deepStrictEqual(result.logger, { foo: 'bar', bar: 'foo' }, 'simple execution')
 })

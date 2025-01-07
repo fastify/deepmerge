@@ -5,28 +5,24 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')({ all: true })
-const test = require('tape').test
+const { test } = require('node:test')
 
 test('return an empty object if first argument is an array with no elements', function (t) {
-  t.same(deepmerge(), {})
-  t.end()
+  t.assert.deepStrictEqual(deepmerge(), {})
 })
 
 test('Work just fine if first argument is an array with least than two elements', function (t) {
   const actual = deepmerge({ example: true })
   const expected = { example: true }
-  t.same(actual, expected)
-  t.end()
+  t.assert.deepStrictEqual(actual, expected)
 })
 
 test('execute correctly if options object were not passed', function (t) {
-  t.doesNotThrow(deepmerge.bind(null, { example: true }, { another: '123' }))
-  t.end()
+  t.assert.doesNotThrow(deepmerge.bind(null, { example: true }, { another: '123' }))
 })
 
 test('execute correctly if options object were passed', function (t) {
-  t.doesNotThrow(deepmerge.bind(null, { example: true }, { another: '123' }))
-  t.end()
+  t.assert.doesNotThrow(deepmerge.bind(null, { example: true }, { another: '123' }))
 })
 
 test('invoke merge on every item in array should result with all props', function (t) {
@@ -37,11 +33,10 @@ test('invoke merge on every item in array should result with all props', functio
 
   const mergedObject = deepmerge(firstObject, secondObject, thirdObject, fourthObject)
 
-  t.ok(mergedObject.first === true)
-  t.ok(mergedObject.second === false)
-  t.ok(mergedObject.third === 123)
-  t.ok(mergedObject.fourth === 'some string')
-  t.end()
+  t.assert.ok(mergedObject.first === true)
+  t.assert.ok(mergedObject.second === false)
+  t.assert.ok(mergedObject.third === 123)
+  t.assert.ok(mergedObject.fourth === 'some string')
 })
 
 test('invoke merge on every item in array with clone should clone all elements', function (t) {
@@ -51,11 +46,9 @@ test('invoke merge on every item in array with clone should clone all elements',
 
   const mergedWithClone = deepmerge(firstObject, secondObject, thirdObject)
 
-  t.not(mergedWithClone.a, firstObject.a)
-  t.not(mergedWithClone.b, secondObject.b)
-  t.not(mergedWithClone.c, thirdObject.c)
-
-  t.end()
+  t.assert.notStrictEqual(mergedWithClone.a, firstObject.a)
+  t.assert.notStrictEqual(mergedWithClone.b, secondObject.b)
+  t.assert.notStrictEqual(mergedWithClone.c, thirdObject.c)
 })
 
 test('invoke merge on every item in array without clone should clone all elements', function (t) {
@@ -65,9 +58,7 @@ test('invoke merge on every item in array without clone should clone all element
 
   const mergedWithoutClone = deepmerge(firstObject, secondObject, thirdObject)
 
-  t.not(mergedWithoutClone.a, firstObject.a)
-  t.not(mergedWithoutClone.b, secondObject.b)
-  t.not(mergedWithoutClone.c, thirdObject.c)
-
-  t.end()
+  t.assert.notStrictEqual(mergedWithoutClone.a, firstObject.a)
+  t.assert.notStrictEqual(mergedWithoutClone.b, secondObject.b)
+  t.assert.notStrictEqual(mergedWithoutClone.c, thirdObject.c)
 })

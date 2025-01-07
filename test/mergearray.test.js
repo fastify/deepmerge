@@ -5,16 +5,16 @@
 // Copyright (c) 2012 - 2022 James Halliday, Josh Duff, and other contributors of deepmerge
 
 const deepmerge = require('../index')
-const test = require('tape').test
+const {test} = require('node:test')
 
 test('all options are set', function (t) {
   t.plan(4)
 
   function mergeArray (options) {
-    t.equal(typeof options.deepmerge, 'function')
-    t.equal(typeof options.isMergeableObject, 'function')
-    t.equal(typeof options.getKeys, 'function')
-    t.equal(typeof options.clone, 'function')
+    t.assert.deepStrictEqual(typeof options.deepmerge, 'function')
+    t.assert.deepStrictEqual(typeof options.isMergeableObject, 'function')
+    t.assert.deepStrictEqual(typeof options.getKeys, 'function')
+    t.assert.deepStrictEqual(typeof options.clone, 'function')
     return (_a, _b) => []
   }
   const merge = deepmerge({ mergeArray })
@@ -33,10 +33,10 @@ test('cloning works properly', function (t) {
   }
   const a = [1, 2]
   const b = [3, 4]
-  t.ok(b !== deepmerge({ mergeArray: cloneMerge })(a, b))
-  t.same(deepmerge({ mergeArray: cloneMerge })(a, b), [3, 4])
-  t.ok(b === deepmerge({ mergeArray: referenceMerge })(a, b))
-  t.same(deepmerge({ mergeArray: referenceMerge })(a, b), [3, 4])
+  t.assert.ok(b !== deepmerge({ mergeArray: cloneMerge })(a, b))
+  t.assert.deepStrictEqual(deepmerge({ mergeArray: cloneMerge })(a, b), [3, 4])
+  t.assert.ok(b === deepmerge({ mergeArray: referenceMerge })(a, b))
+  t.assert.deepStrictEqual(deepmerge({ mergeArray: referenceMerge })(a, b), [3, 4])
 })
 
 test('custom merge array', function (t) {
@@ -62,9 +62,9 @@ test('custom merge array', function (t) {
     someObject: { what: 'yes' }
   }
 
-  t.ok(mergeFunctionCalled)
-  t.deepEqual(actual, expected)
-  t.end()
+  t.assert.ok(mergeFunctionCalled)
+  t.assert.deepStrictEqual(actual, expected)
+
 })
 
 test('merge top-level arrays', function (t) {
@@ -79,8 +79,8 @@ test('merge top-level arrays', function (t) {
   const actual = merge(a, b)
   const expected = [3, 4]
 
-  t.ok(b === actual)
-  t.deepEqual(actual, expected)
+  t.assert.ok(b === actual)
+  t.assert.deepStrictEqual(actual, expected)
 })
 
 test('cloner function is available for merge functions to use', function (t) {
@@ -88,7 +88,7 @@ test('cloner function is available for merge functions to use', function (t) {
   let customMergeWasCalled = false
   function cloneMerge (options) {
     const clone = options.clone
-    t.ok(options.clone, 'cloner function is available')
+    t.assert.ok(options.clone, 'cloner function is available')
     return function (target, source) {
       customMergeWasCalled = true
       return target.concat(source).map(function (element) {
@@ -112,8 +112,8 @@ test('cloner function is available for merge functions to use', function (t) {
     key2: ['four']
   }
 
-  t.deepEqual(merge(target, src), expected)
-  t.ok(customMergeWasCalled)
-  t.ok(Array.isArray(merge(target, src).key1))
-  t.ok(Array.isArray(merge(target, src).key2))
+  t.assert.deepStrictEqual(merge(target, src), expected)
+  t.assert.ok(customMergeWasCalled)
+  t.assert.ok(Array.isArray(merge(target, src).key1))
+  t.assert.ok(Array.isArray(merge(target, src).key2))
 })
