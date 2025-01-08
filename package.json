@@ -68,6 +68,7 @@
     "merge",
     "deep",
     "recursive",
-    "object"
+    "object",
+    "immutable"
   ]
 }

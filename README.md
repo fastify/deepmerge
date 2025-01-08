@@ -15,6 +15,8 @@ npm i @fastify/deepmerge
 
 The module exports a function, which provides a function to deepmerge Objects.
 
+`@fastify/deepmerge` does not mutate the input objects. It returns a new object, which is the result of the merge.
+
 ```
 deepmerge(options)
 ```
