@@ -9,7 +9,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
-    "test:unit": "tap",
+    "test:unit": "c8 tape test/*.js",
     "test:typescript": "tsd"
   },
   "repository": {
@@ -54,8 +54,8 @@
   "devDependencies": {
     "eslint": "^9.17.0",
     "neostandard": "^0.12.0",
-    "tap": "^21.0.0",
     "tape": "^5.7.5",
+    "c8": "^7.0.0",
     "tsd": "^0.31.1"
   },
   "files": [
