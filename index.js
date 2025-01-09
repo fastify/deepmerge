@@ -49,7 +49,7 @@ function deepmergeConstructor (options) {
     for (i; i < tl; ++i) {
       result[i] = clone(target[i])
     }
-    for (i; i < sl; ++i) {
+    for (i= 0; i < sl; ++i) {
       result[i + tl] = clone(source[i])
     }
     return result
