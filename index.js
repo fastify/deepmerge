@@ -46,10 +46,10 @@ function deepmergeConstructor (options) {
     const sl = source.length
     let i = 0
     const result = new Array(tl + sl)
-    for (i = 0; i < tl; ++i) {
+    for (i; i < tl; ++i) {
       result[i] = clone(target[i])
     }
-    for (i = 0; i < sl; ++i) {
+    for (i; i < sl; ++i) {
       result[i + tl] = clone(source[i])
     }
     return result
