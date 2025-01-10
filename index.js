@@ -19,7 +19,7 @@ function deepmergeConstructor (options) {
     let i = 0
     const il = value.length
     const result = new Array(il)
-    for (i = 0; i < il; ++i) {
+    for (i; i < il; ++i) {
       result[i] = clone(value[i])
     }
     return result
@@ -46,7 +46,7 @@ function deepmergeConstructor (options) {
     const sl = source.length
     let i = 0
     const result = new Array(tl + sl)
-    for (i = 0; i < tl; ++i) {
+    for (i; i < tl; ++i) {
       result[i] = clone(target[i])
     }
     for (i = 0; i < sl; ++i) {
