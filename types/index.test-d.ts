@@ -70,3 +70,35 @@ deepmerge({
     }
   }
 })
+
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>
+    }
+  : T
+
+type StrictObject = {
+  a: string
+  b: number
+  c: {
+    d: string
+  }
+}
+
+const obj1: StrictObject = {
+  a: '1',
+  b: 2,
+  c: {
+    d: '3',
+  },
+}
+
+const obj2: DeepPartial<StrictObject> = {
+  b: 4,
+}
+
+const obj3: DeepPartial<StrictObject> = {
+  c: { d: '5' },
+}
+
+expectType<StrictObject>(deepmerge({ all: true })(obj1, obj2, obj3))
