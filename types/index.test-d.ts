@@ -70,3 +70,37 @@ deepmerge({
     }
   }
 })
+
+type StrictObject = {
+  a: string
+  b: number
+  c: {
+    d: string
+  }
+}
+
+type DeepOptionalObject = {
+  a?: string
+  b?: number
+  c?: {
+    d?: string
+  }
+}
+
+const obj1: StrictObject = {
+  a: '1',
+  b: 2,
+  c: {
+    d: '3',
+  },
+}
+
+const obj2: DeepOptionalObject = {
+  b: 4,
+}
+
+const obj3: DeepOptionalObject = {
+  c: { d: '5' },
+}
+
+expectType<StrictObject>(deepmerge({ all: true })(obj1, obj2, obj3))
