@@ -71,17 +71,19 @@ deepmerge({
   }
 })
 
-type DeepPartial<T> = T extends object
-  ? {
-      [P in keyof T]?: DeepPartial<T[P]>
-    }
-  : T
-
 type StrictObject = {
   a: string
   b: number
   c: {
     d: string
+  }
+}
+
+type DeepOptionalObject = {
+  a?: string
+  b?: number
+  c?: {
+    d?: string
   }
 }
 
@@ -93,11 +95,11 @@ const obj1: StrictObject = {
   },
 }
 
-const obj2: DeepPartial<StrictObject> = {
+const obj2: DeepOptionalObject = {
   b: 4,
 }
 
-const obj3: DeepPartial<StrictObject> = {
+const obj3: DeepOptionalObject = {
   c: { d: '5' },
 }
 
