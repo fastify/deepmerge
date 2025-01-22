@@ -72,7 +72,7 @@ interface Options {
 type DeepmergeConstructor = typeof deepmerge
 
 declare namespace deepmerge {
-  export { Options }
+  export { Options, DeepMergeFn, DeepMergeAllFn }
   export const deepmerge: DeepmergeConstructor
   export { deepmerge as default }
 }
