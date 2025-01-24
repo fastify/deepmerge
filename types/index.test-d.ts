@@ -1,5 +1,8 @@
 import { expectAssignable, expectError, expectType } from 'tsd'
-import { deepmerge } from '.'
+import { deepmerge, type DeepMergeFn, type DeepMergeAllFn } from '.'
+
+expectAssignable<Function>(deepmerge())
+expectType<DeepMergeFn>(deepmerge())
 
 expectType<string>(deepmerge()({ a: 'a' }, { b: 'b' }).a)
 expectType<string>(deepmerge()({ a: 'a' }, { b: 'b' }).b)
@@ -12,6 +15,7 @@ expectError(deepmerge({ symbols: 2 }))
 expectError(deepmerge({ symbol: 2 }))
 
 expectAssignable<Function>(deepmerge({ symbols: true }))
+expectType<DeepMergeFn>(deepmerge({ symbols: true }))
 
 expectType<string>(deepmerge()('string', { a: 'string' }).a)
 expectType<string>(deepmerge()(1, { a: 'string' }).a)
@@ -44,7 +48,9 @@ expectType<Date>(deepmerge()({ a: { b: {} } }, new Date()))
 expectType<Map<any, any>>(deepmerge()({ a: { b: {} } }, new Map()))
 
 expectAssignable<Function>(deepmerge({ all: true }))
+expectType<DeepMergeAllFn>(deepmerge({ all: true }))
 expectAssignable<Function>(deepmerge({ all: true, symbols: true }))
+expectType<DeepMergeAllFn>(deepmerge({ all: true, symbols: true }))
 expectType<string>(deepmerge({ all: true, symbols: true })({ a: 'a' }).a)
 expectType<string>(deepmerge({ all: true, symbols: true })({ a: 'a' }, { b: 'a' }).a)
 expectType<string>(deepmerge({ all: true, symbols: true })({ a: 'a' }, { b: 'a' }).b)
