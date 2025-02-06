@@ -7,7 +7,7 @@
 const deepmerge = require('../index')
 const test = require('tape').test
 
-test('custom isMergeableObject', function (t) {
+test('custom isMergeableObject', { skip: typeof FormData === "undefined" }, function (t) {
   function customIsMergeableObject (value) {
     return (
       typeof value === 'object' &&
