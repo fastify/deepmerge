@@ -61,7 +61,6 @@ type MergeArrayFnOptions = {
   getKeys: (value: object) => string[];
 }
 
-
 /**
  * A function responsible handling the cloning logic of the provided prototype object.
  *
