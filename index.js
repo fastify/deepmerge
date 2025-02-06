@@ -73,17 +73,17 @@ function deepmergeConstructor (options) {
     ? options.cloneProtoObject
     : undefined
 
-  function isMergeableObject (value) {
+  function defaultIsMergeableObject (value) {
     return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date)
   }
+
+  const isMergeableObject = typeof options?.isMergeableObject === 'function'
+    ? options.isMergeableObject
+    : defaultIsMergeableObject
 
   function isPrimitive (value) {
     return typeof value !== 'object' || value === null
   }
-
-  const isPrimitiveOrBuiltIn = typeof Buffer !== 'undefined'
-    ? (value) => typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date || value instanceof Buffer
-    : (value) => typeof value !== 'object' || value === null || value instanceof RegExp || value instanceof Date
 
   const mergeArray = options && typeof options.mergeArray === 'function'
     ? options.mergeArray({ clone, deepmerge: _deepmerge, getKeys, isMergeableObject })
@@ -134,7 +134,7 @@ function deepmergeConstructor (options) {
 
     if (isPrimitive(source)) {
       return source
-    } else if (isPrimitiveOrBuiltIn(target)) {
+    } else if (!isMergeableObject(target)) {
       return clone(source)
     } else if (sourceIsArray && targetIsArray) {
       return mergeArray(target, source)

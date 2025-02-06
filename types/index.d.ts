@@ -65,6 +65,7 @@ type MergeArrayFn = (options: MergeArrayFnOptions) => (target: any[], source: an
 
 interface Options {
   mergeArray?: MergeArrayFn;
+  isMergeableObject?: (value: any) => boolean;
   symbols?: boolean;
   all?: boolean;
 }
