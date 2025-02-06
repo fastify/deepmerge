@@ -1,6 +1,6 @@
 {
   "name": "@fastify/deepmerge",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Merges the enumerable properties of two or more objects deeply.",
   "main": "index.js",
   "type": "commonjs",

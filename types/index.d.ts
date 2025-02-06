@@ -61,9 +61,18 @@ type MergeArrayFnOptions = {
   getKeys: (value: object) => string[];
 }
 
+
+/**
+ * A function responsible handling the cloning logic of the provided prototype object.
+ *
+ * @param value - The proto object to clone.
+ * @returns the resulting clone (can also return the object itself if you do not want clone but replace).
+ */
+type CloneProtoObjectFn = (value: any) => any
 type MergeArrayFn = (options: MergeArrayFnOptions) => (target: any[], source: any[]) => any[]
 
 interface Options {
+  cloneProtoObject?: CloneProtoObjectFn;
   mergeArray?: MergeArrayFn;
   symbols?: boolean;
   all?: boolean;
