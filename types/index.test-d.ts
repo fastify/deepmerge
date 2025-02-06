@@ -76,3 +76,8 @@ deepmerge({
     }
   }
 })
+deepmerge({
+  isMergeableObject: function (value) {
+    return true
+  }
+})
