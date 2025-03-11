@@ -73,6 +73,7 @@ type MergeArrayFn = (options: MergeArrayFnOptions) => (target: any[], source: an
 interface Options {
   cloneProtoObject?: CloneProtoObjectFn;
   mergeArray?: MergeArrayFn;
+  isMergeableObject?: (value: any) => boolean;
   symbols?: boolean;
   all?: boolean;
 }
