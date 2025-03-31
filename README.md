@@ -138,7 +138,7 @@ console.log(result) // { stream: <ref *1> WriteStream }
 
 By default, `@fastify/deepmerge` merges all objects except native `Date` and `RegExp`-Objects. If you want to exclude certain objects from being merged, you can provide a custom function to the `isMergeableObject` option.
 
-The default function looks like this is exported by this module as `isMergeableObject`.
+The default function is exported by this module as `isMergeableObject`.
 
 Following example shows how to extend the default function to exclude globally defined `FormData`-Objects from being identified as mergeable objects.
 
