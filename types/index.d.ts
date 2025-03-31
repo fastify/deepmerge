@@ -76,6 +76,8 @@ declare namespace deepmerge {
   export { Options, DeepMergeFn, DeepMergeAllFn }
   export const deepmerge: DeepmergeConstructor
   export { deepmerge as default }
+
+  export const isMergeableObject: (value: any) => boolean
 }
 
 declare function deepmerge (options: Options & { all: true }): DeepMergeAllFn

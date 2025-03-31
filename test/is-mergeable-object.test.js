@@ -40,3 +40,29 @@ test('custom isMergeableObject', { skip: typeof FormData === 'undefined' }, func
   t.deepEqual(actual, expected)
   t.end()
 })
+
+test('isMergeableObject is not mutable /1', function (t) {
+  t.plan(1)
+  try {
+    deepmerge.isMergeableObject = function (value) {
+      return false
+    }
+  } catch (e) {
+    t.pass('deepmerge.isMergeableObject is not mutable')
+  }
+
+  t.end()
+})
+
+test('isMergeableObject is not mutable /1', function (t) {
+  try {
+    Object.defineProperty(deepmerge, 'isMergeableObject', {
+      value: function (value) {
+        return false
+      }
+    })
+  } catch (e) {
+    t.pass('deepmerge.isMergeableObject is not mutable')
+  }
+  t.end()
+})

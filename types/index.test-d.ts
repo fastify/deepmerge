@@ -81,3 +81,6 @@ deepmerge({
     return true
   }
 })
+
+expectType<(value: any) => boolean>(deepmerge.isMergeableObject)
+expectError(deepmerge.isMergeableObject = function () { return false })

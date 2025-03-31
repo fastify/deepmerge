@@ -6,6 +6,12 @@
 
 const JSON_PROTO = Object.getPrototypeOf({})
 
+function defaultIsMergeableObjectFactory () {
+  return function defaultIsMergeableObject (value) {
+    return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date)
+  }
+}
+
 function deepmergeConstructor (options) {
   function isNotPrototypeKey (value) {
     return (
@@ -73,13 +79,9 @@ function deepmergeConstructor (options) {
     ? options.cloneProtoObject
     : undefined
 
-  function defaultIsMergeableObject (value) {
-    return typeof value === 'object' && value !== null && !(value instanceof RegExp) && !(value instanceof Date)
-  }
-
   const isMergeableObject = typeof options?.isMergeableObject === 'function'
     ? options.isMergeableObject
-    : defaultIsMergeableObject
+    : defaultIsMergeableObjectFactory()
 
   function isPrimitive (value) {
     return typeof value !== 'object' || value === null
@@ -169,3 +171,7 @@ function deepmergeConstructor (options) {
 module.exports = deepmergeConstructor
 module.exports.default = deepmergeConstructor
 module.exports.deepmerge = deepmergeConstructor
+
+Object.defineProperty(module.exports, 'isMergeableObject', {
+  get: defaultIsMergeableObjectFactory
+})

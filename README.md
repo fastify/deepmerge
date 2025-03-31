@@ -27,6 +27,7 @@ deepmerge(options)
 - `all` (`boolean`, optional) - makes deepmerge accept and merge any number of passed objects, default is false
 - `mergeArray` (`function`, optional) - provide a function, which returns a function to add custom array merging function
 - `cloneProtoObject` (`function`, optional) - provide a function, which must return a clone of the object with the prototype of the object
+- `isMergeableObject` (`function`, optional) - provide a function, which must return true if the object should be merged, default is `isMergeableObject` from this module
 
 ```js
 const deepmerge = require('@fastify/deepmerge')()
@@ -131,6 +132,27 @@ const deepmergeByReference = require('@fastify/deepmerge')({
 
 const result = deepmergeByReference({}, { stream: process.stdout })
 console.log(result) // { stream: <ref *1> WriteStream }
+```
+
+#### isMergeableObject
+
+By default, `@fastify/deepmerge` merges all objects except native `Date` and `RegExp`-Objects. If you want to exclude certain objects from being merged, you can provide a custom function to the `isMergeableObject` option.
+
+The default function looks like this is exported by this module as `isMergeableObject`.
+
+Following example shows how to extend the default function to exclude globally defined `FormData`-Objects from being identified as mergeable objects.
+
+```js
+const { isMergeableObject: defaultIsMergeableObject } = require('@fastify/deepmerge')
+
+
+function customIsMergeableObject (source) {
+  return defaultIsMergeableObject(source) && !(source instanceof FormData)
+}
+
+const deepmergeWithCustomMergeableObject = require('@fastify/deepmerge')({
+  isMergeableObject: customIsMergeableObject
+})
 ```
 
 ## Benchmarks
