@@ -73,6 +73,7 @@ type MergeArrayFn = (options: MergeArrayFnOptions) => (target: any[], source: an
 interface Options {
   cloneProtoObject?: CloneProtoObjectFn;
   mergeArray?: MergeArrayFn;
+  isMergeableObject?: (value: any) => boolean;
   symbols?: boolean;
   all?: boolean;
 }
@@ -83,6 +84,8 @@ declare namespace deepmerge {
   export { Options, DeepMergeFn, DeepMergeAllFn }
   export const deepmerge: DeepmergeConstructor
   export { deepmerge as default }
+
+  export const isMergeableObject: (value: any) => boolean
 }
 
 declare function deepmerge (options: Options & { all: true }): DeepMergeAllFn
