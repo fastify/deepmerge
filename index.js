@@ -136,12 +136,12 @@ function deepmergeConstructor (options) {
   }
 
   function _deepmerge (target, source) {
-    const sourceIsArray = Array.isArray(source)
-    const targetIsArray = Array.isArray(target)
-
     if (skipUndefinedSources && typeof source === 'undefined') {
       return clone(target)
     }
+    
+    const sourceIsArray = Array.isArray(source)
+    const targetIsArray = Array.isArray(target)
 
     if (isPrimitive(source)) {
       return source
