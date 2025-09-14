@@ -68,6 +68,7 @@ type MergeArrayFnOptions = {
  * @returns the resulting clone (can also return the object itself if you do not want clone but replace).
  */
 type CloneProtoObjectFn = (value: any) => any
+
 type MergeArrayFn = (options: MergeArrayFnOptions) => (target: any[], source: any[]) => any[]
 
 interface Options {
@@ -76,6 +77,11 @@ interface Options {
   isMergeableObject?: (value: any) => boolean;
   symbols?: boolean;
   all?: boolean;
+  /**
+   * If true, ignore undefined values from source and keep existing target values.
+   * Defaults to false.
+   */
+  onlyDefinedProperties?: boolean;
 }
 
 type DeepmergeConstructor = typeof deepmerge
@@ -89,6 +95,7 @@ declare namespace deepmerge {
 }
 
 declare function deepmerge (options: Options & { all: true }): DeepMergeAllFn
+
 declare function deepmerge (options?: Options): DeepMergeFn
 
 export = deepmerge
