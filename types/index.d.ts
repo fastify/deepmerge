@@ -78,10 +78,10 @@ interface Options {
   symbols?: boolean;
   all?: boolean;
   /**
-   * If true, do not overwrite existing values with undefined values from source.
+   * If true, ignore undefined values from source and keep existing target values.
    * Defaults to false.
    */
-  skipUndefinedSources?: boolean;
+  onlyDefinedProperties?: boolean;
 }
 
 type DeepmergeConstructor = typeof deepmerge

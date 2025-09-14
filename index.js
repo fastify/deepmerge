@@ -83,7 +83,7 @@ function deepmergeConstructor (options) {
     ? options.isMergeableObject
     : defaultIsMergeableObjectFactory()
 
-  const skipUndefinedSources = options?.skipUndefinedSources === true
+  const onlyDefinedProperties = options?.onlyDefinedProperties === true
 
   function isPrimitive (value) {
     return typeof value !== 'object' || value === null
@@ -126,7 +126,7 @@ function deepmergeConstructor (options) {
           }
         }
       } else {
-        if (skipUndefinedSources && typeof source[key] === 'undefined') {
+        if (onlyDefinedProperties && typeof source[key] === 'undefined') {
           continue
         }
         result[key] = clone(source[key])
@@ -136,10 +136,10 @@ function deepmergeConstructor (options) {
   }
 
   function _deepmerge (target, source) {
-    if (skipUndefinedSources && typeof source === 'undefined') {
+    if (onlyDefinedProperties && typeof source === 'undefined') {
       return clone(target)
     }
-    
+
     const sourceIsArray = Array.isArray(source)
     const targetIsArray = Array.isArray(target)
 

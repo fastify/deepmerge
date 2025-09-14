@@ -28,7 +28,7 @@ deepmerge(options)
 - `mergeArray` (`function`, optional) - provide a function, which returns a function to add custom array merging function
 - `cloneProtoObject` (`function`, optional) - provide a function, which must return a clone of the object with the prototype of the object
 - `isMergeableObject` (`function`, optional) - provide a function, which must return true if the object should be merged, default is `isMergeableObject` from this module
-- `skipUndefinedSources` (`boolean`, optional) - if `true`, properties with `undefined` in the source will not overwrite existing values from the target, default is `false`
+- `onlyDefinedProperties` (`boolean`, optional) - if `true`, properties with `undefined` in the source will not overwrite existing values from the target, default is `false`
 
 ```js
 const deepmerge = require('@fastify/deepmerge')()
@@ -42,10 +42,10 @@ const result = deepmerge({a: 'value'}, { b: 404 }, { a: 404 })
 console.log(result) // {a: 404,  b: 404 }
 ```
 
-Example with `skipUndefinedSources` option:
+Example with `onlyDefinedProperties` option:
 
 ```js
-const deepmerge = require('@fastify/deepmerge')({ skipUndefinedSources: true })
+const deepmerge = require('@fastify/deepmerge')({ onlyDefinedProperties: true })
 const result = deepmerge({ a: 1, b: null }, { a: undefined, b: undefined })
 console.log(result) // { a: 1, b: null }
 ```
