@@ -1,5 +1,8 @@
 import { expectAssignable, expectError, expectType } from 'tsd'
-import { deepmerge, type DeepMergeFn, type DeepMergeAllFn } from '.'
+import { deepmerge, type DeepMergeFn, type DeepMergeAllFn, DeepMergeDefinedFn, DeepMergeAllDefinedFn } from '.'
+
+// onlyDefinedProperties: true tests
+// When source has optional properties (Partial), merging into a full type should preserve required-ness
 
 expectAssignable<Function>(deepmerge())
 expectType<DeepMergeFn>(deepmerge())
@@ -85,11 +88,6 @@ deepmerge({
 expectType<(value: any) => boolean>(deepmerge.isMergeableObject)
 expectError(deepmerge.isMergeableObject = function () { return false })
 
-// onlyDefinedProperties: true tests
-// When source has optional properties (Partial), merging into a full type should preserve required-ness
-
-import type { DeepMergeDefinedFn, DeepMergeAllDefinedFn } from '.'
-
 expectType<DeepMergeDefinedFn>(deepmerge({ onlyDefinedProperties: true }))
 expectType<DeepMergeAllDefinedFn>(deepmerge({ all: true, onlyDefinedProperties: true }))
 
@@ -119,8 +117,8 @@ expectType<{ enabled: boolean; value: string }>(mergedDefined.nested)
 expectAssignable<FullOptions>(mergedDefined)
 
 // Contrast with regular merge (without onlyDefinedProperties) - source undefined could override
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mergedRegular = deepmerge()(fullTarget, partialSource)
-// Note: regular merge still works but types may include undefined from partial source
 
 // Deep partial merging
 type DeepPartialOptions = {

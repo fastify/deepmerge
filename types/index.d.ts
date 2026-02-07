@@ -95,9 +95,9 @@ type DeepMergeDefinedProperty<T, U> =
   [undefined] extends [U]
     // Both T and ExcludeUndefined<U> are mergeable objects - merge them
     ? [IsMergeableObject<T>, IsMergeableObject<ExcludeUndefined<U>>] extends [true, true]
-      ? DeepMergeDefinedHelper<T, ExcludeUndefined<U>>
+        ? DeepMergeDefinedHelper<T, ExcludeUndefined<U>>
       // Otherwise use target's type (preserving non-undefined)
-      : T
+        : T
     // U cannot be undefined - normal deep merge
     : DeepMergeDefined<T, U>
 
@@ -119,15 +119,15 @@ type DeepMergeDefinedHelper<T, U> = {
 type DeepMergeDefined<T, U> =
   U extends BuiltIns
     ? [undefined] extends [U]
-      ? [undefined] extends [T] ? T : ExcludeUndefined<U> | T
-      : U
+        ? [undefined] extends [T] ? T : ExcludeUndefined<U> | T
+        : U
     : [T, U] extends [readonly any[], readonly any[]]
         ? MergeArrays<T, U>
         : [IsMergeableObject<T>, IsMergeableObject<U>] extends [true, true]
             ? DeepMergeDefinedHelper<T, U>
             : [undefined] extends [U]
-              ? [undefined] extends [T] ? T : ExcludeUndefined<U> | T
-              : U
+                ? [undefined] extends [T] ? T : ExcludeUndefined<U> | T
+                : U
 
 type DeepMergeAllDefined<R, T> = First<T> extends never
   ? R
