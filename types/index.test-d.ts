@@ -84,3 +84,65 @@ deepmerge({
 
 expectType<(value: any) => boolean>(deepmerge.isMergeableObject)
 expectError(deepmerge.isMergeableObject = function () { return false })
+
+// onlyDefinedProperties: true tests
+// When source has optional properties (Partial), merging into a full type should preserve required-ness
+
+import type { DeepMergeDefinedFn, DeepMergeAllDefinedFn } from '.'
+
+expectType<DeepMergeDefinedFn>(deepmerge({ onlyDefinedProperties: true }))
+expectType<DeepMergeAllDefinedFn>(deepmerge({ all: true, onlyDefinedProperties: true }))
+
+// Basic case: merging partial into full type preserves required properties
+interface FullOptions {
+  apiUrl: string
+  timeout: number
+  nested: {
+    enabled: boolean
+    value: string
+  }
+}
+
+type PartialOptions = Partial<FullOptions>
+
+// With onlyDefinedProperties: true, merging Partial<T> into T should return T
+// because undefined values from source are ignored at runtime
+const fullTarget: FullOptions = { apiUrl: 'url', timeout: 100, nested: { enabled: true, value: 'test' } }
+const partialSource: PartialOptions = { timeout: 200 }
+
+const mergedDefined = deepmerge({ onlyDefinedProperties: true })(fullTarget, partialSource)
+expectType<string>(mergedDefined.apiUrl)
+expectType<number>(mergedDefined.timeout)
+expectType<{ enabled: boolean; value: string }>(mergedDefined.nested)
+
+// Result should be assignable to FullOptions (the target type)
+expectAssignable<FullOptions>(mergedDefined)
+
+// Contrast with regular merge (without onlyDefinedProperties) - source undefined could override
+const mergedRegular = deepmerge()(fullTarget, partialSource)
+// Note: regular merge still works but types may include undefined from partial source
+
+// Deep partial merging
+type DeepPartialOptions = {
+  apiUrl?: string
+  timeout?: number
+  nested?: {
+    enabled?: boolean
+    value?: string
+  }
+}
+
+const deepPartialSource: DeepPartialOptions = { nested: { enabled: false } }
+const mergedDeep = deepmerge({ onlyDefinedProperties: true })(fullTarget, deepPartialSource)
+expectType<string>(mergedDeep.apiUrl)
+expectType<number>(mergedDeep.timeout)
+// Nested properties should also preserve required-ness from target
+expectAssignable<{ enabled: boolean; value: string }>(mergedDeep.nested)
+
+// all mode with onlyDefinedProperties
+const mergedAll = deepmerge({ all: true, onlyDefinedProperties: true })(
+  fullTarget,
+  { timeout: 300 } as PartialOptions,
+  { apiUrl: 'newUrl' } as PartialOptions
+)
+expectAssignable<FullOptions>(mergedAll)
