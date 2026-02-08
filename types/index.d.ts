@@ -59,16 +59,18 @@ type DeepMerge<T, U> =
 type ExcludeUndefined<T> = T extends undefined ? never : T
 
 /**
- * Check if a type is a mergeable object (not array, not primitive, not builtin)
+ * Check if a type is a mergeable object (not array, not primitive, not builtin, not function)
  * Using 'object' check which works with Partial types (unlike index signatures)
  */
 type IsMergeableObject<T> = T extends BuiltIns
   ? false
   : T extends readonly any[]
     ? false
-    : T extends object
-      ? true
-      : false
+    : T extends (...args: any[]) => any
+      ? false
+      : T extends object
+        ? true
+        : false
 
 /**
  * Get keys that exist in both T and U
