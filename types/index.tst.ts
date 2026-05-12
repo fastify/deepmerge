@@ -58,10 +58,8 @@ expect(deepmerge({ all: true, symbols: true })({ a: 'a' }, { a: 2 }).a).type.toB
 expect(deepmerge({ all: true, symbols: true })({ a: 'a' }, 2)).type.toBe<number>()
 expect(deepmerge({ all: true, symbols: true })({ a: 'a' }, 'string')).type.toBe<string>()
 
-// @ts-expect-error No overload matches this call.
-deepmerge({ mergeArray: function () {} })
-deepmerge({
-  // @ts-expect-error No overload matches this call.
+expect(deepmerge).type.not.toBeCallableWith({ mergeArray: function () {} })
+expect(deepmerge).type.not.toBeCallableWith({
   mergeArray: function () {
     return () => 'test'
   }
