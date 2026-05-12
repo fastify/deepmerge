@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
     "test:unit": "c8 tape test/*.js",
-    "test:typescript": "tsd"
+    "test:typescript": "tstyche"
   },
   "repository": {
     "type": "git",
@@ -56,7 +56,7 @@
     "neostandard": "^0.13.0",
     "tape": "^5.7.5",
     "c8": "^11.0.0",
-    "tsd": "^0.33.0"
+    "tstyche": "^7.0.0"
   },
   "files": [
     "LICENSE",
