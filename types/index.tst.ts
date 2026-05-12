@@ -10,12 +10,9 @@ expect(deepmerge()({ a: 2 }, { b: 'b' }).a).type.toBe<number>()
 expect(deepmerge()({ a: 2 }, { b: 'b' }).b).type.toBe<string>()
 expect(deepmerge()({ a: 2 }, { a: 'b' }).a).type.toBe<string>()
 
-// @ts-expect-error No overload matches this call.
-deepmerge(1)
-// @ts-expect-error No overload matches this call.
-deepmerge({ symbols: 2 })
-// @ts-expect-error No overload matches this call.
-deepmerge({ symbol: 2 })
+expect(deepmerge).type.not.toBeCallableWith(1)
+expect(deepmerge).type.not.toBeCallableWith({ symbols: 2 })
+expect(deepmerge).type.not.toBeCallableWith({ symbol: 2 })
 
 expect(deepmerge({ symbols: true })).type.toBeAssignableTo<Function>()
 expect(deepmerge({ symbols: true })).type.toBe<DeepMergeFn>()
