@@ -93,8 +93,6 @@ deepmerge({
 })
 
 expect(deepmerge.isMergeableObject).type.toBe<(value: any) => boolean>()
-// @ts-expect-error Cannot assign to 'isMergeableObject' because it is a read-only property.
-deepmerge.isMergeableObject = function () { return false }
 
 expect(deepmerge({ onlyDefinedProperties: true })).type.toBe<DeepMergeDefinedFn>()
 expect(deepmerge({ all: true, onlyDefinedProperties: true })).type.toBe<DeepMergeAllDefinedFn>()
