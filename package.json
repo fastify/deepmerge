@@ -9,7 +9,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
-    "test:unit": "c8 --all --include index.js --100 tape test/*.js",
+    "test:unit": "c8 --all --include index.js --check-coverage --100 tape test/*.js",
     "test:typescript": "tstyche"
   },
   "repository": {
