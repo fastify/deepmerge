@@ -9,13 +9,20 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
-    "test:unit": "c8 --all --include index.js --check-coverage --100 tape test/*.js",
-    "test:typescript": "tstyche"
+    "test:typescript": "tstyche",
+    "test:unit": "c8 --all --include index.js --check-coverage --100 tape test/*.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fastify/deepmerge.git"
   },
+  "keywords": [
+    "merge",
+    "deep",
+    "recursive",
+    "object",
+    "immutable"
+  ],
   "author": "Aras Abbasi <aras.abbasi@gmail.com>",
   "contributors": [
     {
@@ -52,23 +59,10 @@
     }
   ],
   "devDependencies": {
+    "c8": "^12.0.0",
     "eslint": "^9.17.0",
     "neostandard": "^0.13.0",
     "tape": "^5.7.5",
-    "c8": "^12.0.0",
     "tstyche": "^7.0.0"
-  },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "index.js",
-    "types/index.d.ts"
-  ],
-  "keywords": [
-    "merge",
-    "deep",
-    "recursive",
-    "object",
-    "immutable"
-  ]
+  }
 }
